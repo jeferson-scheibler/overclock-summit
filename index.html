@@ -240,6 +240,37 @@ svg{vertical-align:middle}
 @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 
+/* TOPIC CARDS */
+.topics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);margin-top:60px}
+.topic-card{background:var(--bg);padding:32px 28px;transition:background .3s;position:relative;overflow:hidden}
+.topic-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--neon);opacity:0;transition:opacity .3s;box-shadow:0 0 8px var(--neon)}
+.topic-card:hover{background:rgba(0,18,45,.95)}
+.topic-card:hover::before{opacity:.7}
+.topic-title{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;margin-bottom:12px;color:var(--neon);text-shadow:var(--glow)}
+.topic-body{font-size:12px;line-height:1.9;font-weight:300;color:var(--muted)}
+
+/* DATI */
+#dati{padding:100px 48px;max-width:1200px;margin:0 auto;position:relative;z-index:2}
+.dati-inner{display:flex;align-items:center;gap:64px;padding:48px 56px;border:1px solid var(--border);background:var(--card);backdrop-filter:blur(10px);position:relative}
+.dati-inner::before,.dati-inner::after{content:'';position:absolute;width:18px;height:18px}
+.dati-inner::before{top:-1px;left:-1px;border-top:2px solid var(--neon);border-left:2px solid var(--neon);box-shadow:-2px -2px 8px rgba(0,240,255,0.5)}
+.dati-inner::after{bottom:-1px;right:-1px;border-bottom:2px solid var(--neon);border-right:2px solid var(--neon);box-shadow:2px 2px 8px rgba(0,240,255,0.5)}
+.dati-logo-wrap{flex-shrink:0;width:120px;height:120px;display:flex;align-items:center;justify-content:center}
+.dati-logo{max-width:120px;max-height:120px;object-fit:contain;filter:drop-shadow(0 0 8px rgba(0,240,255,0.4))}
+.dati-logo-placeholder{font-family:'Orbitron',sans-serif;font-size:28px;font-weight:900;color:var(--neon);text-shadow:var(--glow-lg);letter-spacing:4px;display:none}
+.dati-title{font-family:'Orbitron',sans-serif;font-size:42px;font-weight:900;letter-spacing:6px;color:var(--white);text-shadow:0 0 20px rgba(0,240,255,0.15);margin:8px 0 4px}
+.dati-full{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--neon);margin-bottom:16px}
+.dati-desc{font-size:13px;line-height:2;color:var(--muted);max-width:560px}
+
+/* EASTER EGG */
+#egg-overlay{position:fixed;inset:0;background:rgba(2,4,9,0.92);z-index:9000;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px);animation:fadeIn .3s ease}
+#egg-box{width:min(520px,90vw);border:1px solid var(--neon);background:var(--card);box-shadow:var(--glow-lg);font-family:'JetBrains Mono',monospace;font-size:13px}
+#egg-header{display:flex;align-items:center;gap:6px;padding:10px 16px;border-bottom:1px solid var(--border);background:rgba(0,240,255,0.04)}
+#egg-body{padding:28px 28px 24px;min-height:180px}
+#egg-body p{color:var(--neon);line-height:2;letter-spacing:1px;min-height:1.6em;text-shadow:var(--glow)}
+.egg-highlight{color:var(--white)!important;font-size:16px!important;font-weight:700;text-shadow:var(--glow-lg)!important;letter-spacing:3px!important;margin:8px 0}
+#egg-close-hint{font-size:10px!important;color:var(--muted)!important;text-shadow:none!important;margin-top:16px;letter-spacing:2px}
+
 @media(max-width:768px){
   nav{padding:14px 20px}
   .nav-links{display:none}
@@ -261,6 +292,9 @@ svg{vertical-align:middle}
   #hero{padding:80px 20px}
   .hero-chips{flex-wrap:wrap}
   .hero-chip{border-right:1px solid var(--border)!important;margin-bottom:-1px}
+  .topics-grid{grid-template-columns:repeat(2,1fr)}
+  .dati-inner{flex-direction:column;gap:32px;padding:32px 24px}
+  #dati{padding:60px 24px}
 }
 </style>
 </head>
@@ -276,10 +310,7 @@ svg{vertical-align:middle}
 
 <!-- NAV -->
 <nav>
-  <a href="#hero" class="nav-logo">
-    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-    OVER<span class="ac">CLOCK</span>
-  </a>
+  <a href="#hero" class="nav-logo">OVER<span class="ac">CLOCK</span></a>
   <div class="nav-links">
     <a href="#about">Sobre</a>
     <a href="#days">Programação</a>
@@ -298,7 +329,7 @@ svg{vertical-align:middle}
   </h1>
   <p class="hero-sub">3 dias para tirar seu cérebro da zona de conforto. Um evento intenso onde tecnologia, inovação e comunidade colidem no limite da capacidade criativa.</p>
   <div class="hero-chips">
-    <div class="hero-chip">Edição <span class="v">2025</span></div>
+    <div class="hero-chip">Edição <span class="v">2026</span></div>
     <div class="hero-chip">Rio Grande do Sul</div>
     <div class="hero-chip"><span class="v">3</span>&nbsp;Dias de Imersão</div>
   </div>
@@ -345,7 +376,7 @@ svg{vertical-align:middle}
         <span class="o">ALÉM DO</span><br>
         <span class="s">LIMITE</span>
       </h2>
-      <p class="about-p reveal reveal-delay-2">O Overclock Summit nasceu para criar um marco no ecossistema de tecnologia gaúcho. Inspirado nos maiores eventos do Brasil — FIAP NEXT (6.000+ pessoas), FIAP Connect Summit e Code Con — mas com identidade própria, raízes no Rio Grande do Sul e ancoragem no Instituto Caldeira.</p>
+      <p class="about-p reveal reveal-delay-2">Inspirado nos maiores eventos do ecossistema tech brasileiro — FIAP NEXT, Startup One da FIAP e Code Con Summit — e em referências internacionais como DEF CON, GitHub Universe, ViteConf e Nordic.js. O Overclock Summit absorve o melhor de cada um e constrói algo novo, com identidade gaúcha e foco em quem está construindo o futuro da tecnologia.</p>
       <p class="about-p reveal reveal-delay-3">Não é uma conferência. É uma arena onde estudantes, profissionais e empresas convergem para competir, aprender, criar e se conectar. Cada dia tem um objetivo cirúrgico. Cada mecânica foi desenhada para maximizar impacto.</p>
     </div>
     <div class="about-vis reveal">
@@ -359,7 +390,7 @@ svg{vertical-align:middle}
       <div class="vis-ov">
         <div class="vis-big">3</div>
         <div class="vis-lbl">DIAS DE IMERSÃO</div>
-        <div class="vis-sub">EST. 2025 · RIO GRANDE DO SUL</div>
+        <div class="vis-sub">EST. 2026 · RIO GRANDE DO SUL</div>
       </div>
     </div>
   </div>
@@ -466,24 +497,41 @@ svg{vertical-align:middle}
 
 <!-- PARTNERS -->
 <section id="partners">
-  <span class="stag reveal" style="justify-content:center">SYS.04 — ECOSSISTEMA</span>
-  <h2 class="ptitle reveal reveal-delay-1">QUEM ESTÁ<br>NO CIRCUITO</h2>
-  <p class="psub reveal reveal-delay-2">Palestrantes confirmados e em contato · Parceiros institucionais · Hub âncora</p>
-  <div class="plogos reveal">
-    <div class="pchip"><span>ORACLE</span></div>
-    <div class="pchip"><span>RED HAT</span></div>
-    <div class="pchip"><span>SIEMENS</span></div>
-    <div class="pchip"><span>DELL</span></div>
-    <div class="pchip"><span>ALTUS</span></div>
-    <div class="pchip"><span>RETTA</span></div>
-    <div class="pchip"><span>INTERACT</span></div>
-    <div class="pchip"><span>CLÍNICA EXPERTS</span></div>
-  </div>
-  <div class="caldeira reveal">
-    <span><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg></span>
-    <div>
-      <strong>INSTITUTO CALDEIRA</strong><br>
-      <span style="font-size:11px;opacity:.8">Parceiro âncora proposto · Hub de inovação gaúcho · 22.000 m² · 150+ organizações</span>
+  <span class="stag reveal" style="justify-content:center">SYS.04 — TRILHAS</span>
+  <h2 class="ptitle reveal reveal-delay-1">TEMAS QUE VÃO<br>SACUDIR O EVENTO</h2>
+  <p class="psub reveal reveal-delay-2">Trilhas e debates que estamos construindo para 2026</p>
+  <div class="topics-grid reveal">
+    <div class="topic-card">
+      <h3 class="topic-title">IA NA VEIA</h3>
+      <p class="topic-body">LLMs, RAG, agentes autônomos e como isso muda o trabalho do dev hoje — na prática, sem hype.</p>
+    </div>
+    <div class="topic-card">
+      <h3 class="topic-title">ARQUITETURA SEM DESCULPA</h3>
+      <p class="topic-body">Microsserviços vs monolito, trade-offs reais e as decisões de design que custam caro lá na frente.</p>
+    </div>
+    <div class="topic-card">
+      <h3 class="topic-title">DO REPO AO PRODUTO</h3>
+      <p class="topic-body">Como transformar um projeto pessoal ou TCC em algo que vai para produção e chega em usuários reais.</p>
+    </div>
+    <div class="topic-card">
+      <h3 class="topic-title">SEGURANÇA OFENSIVA</h3>
+      <p class="topic-body">Pentest, bug bounty e a mentalidade de atacante que todo desenvolvedor deveria ter.</p>
+    </div>
+    <div class="topic-card">
+      <h3 class="topic-title">DEVEX &amp; PLATAFORMA</h3>
+      <p class="topic-body">Developer Experience, Internal Developer Platforms e o futuro do trabalho em times de engenharia.</p>
+    </div>
+    <div class="topic-card">
+      <h3 class="topic-title">HARDWARE MEETS SOFTWARE</h3>
+      <p class="topic-body">Automação industrial, embarcados e IoT — onde o código toca o mundo físico.</p>
+    </div>
+    <div class="topic-card">
+      <h3 class="topic-title">OPEN SOURCE COMO CARREIRA</h3>
+      <p class="topic-body">Contribuição, visibilidade e por que o GitHub se tornou o portfólio mais honesto que existe.</p>
+    </div>
+    <div class="topic-card">
+      <h3 class="topic-title">TECH + NEGÓCIO</h3>
+      <p class="topic-body">Product thinking, métricas e por que todo dev que quer crescer precisa entender o lado do business.</p>
     </div>
   </div>
 </section>
@@ -563,13 +611,29 @@ svg{vertical-align:middle}
   </div>
 </section>
 
+<!-- DATI -->
+<section id="dati">
+  <div class="dati-inner reveal">
+    <div class="dati-logo-wrap">
+      <img src="dati-logo.png" alt="Logo DATI" class="dati-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
+      <div class="dati-logo-placeholder">DATI</div>
+    </div>
+    <div class="dati-text">
+      <span class="stag">// ORGANIZAÇÃO</span>
+      <h3 class="dati-title">DATI</h3>
+      <p class="dati-full">Diretório Acadêmico de Tecnologia da Informação</p>
+      <p class="dati-desc">A representação estudantil dos cursos de Engenharia de Software e Engenharia da Computação da UNIVATES. O Overclock Summit é uma realização do DATI para o ecossistema de tecnologia gaúcho.</p>
+    </div>
+  </div>
+</section>
+
 <!-- FOOTER -->
 <footer>
   <div class="flogo">
     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
     OVER<span class="ac">CLOCK</span> SUMMIT
   </div>
-  <p class="fcopy">© 2025 Overclock Summit · Rio Grande do Sul · Brasil</p>
+  <p class="fcopy">© 2026 Overclock Summit · Rio Grande do Sul · Brasil</p>
   <div class="flinks">
     <a href="#about">Sobre</a>
     <a href="#days">Programação</a>
@@ -704,7 +768,7 @@ if(rain){
 }
 
 /* COUNTDOWN */
-const evtDate=new Date('2025-11-15T09:00:00-03:00');
+const evtDate=new Date('2026-10-15T09:00:00-03:00');
 function tick(){
   const diff=evtDate-new Date();
   if(diff<=0){ ['cd-days','cd-hours','cd-mins','cd-secs'].forEach(id=>document.getElementById(id).textContent='00'); return; }
@@ -728,14 +792,52 @@ window.addEventListener('scroll',()=>{
   if(s) s.style.transform=`translateY(${y*.08}px)`;
 });
 
-/* PARTNER CHIP REPEL */
-document.querySelectorAll('.pchip').forEach(c=>{
-  c.addEventListener('mousemove',e=>{
-    const r=c.getBoundingClientRect();
-    c.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.04}px,${(e.clientY-r.top-r.height/2)*.04}px)`;
+/* EASTER EGG — digitar DATI */
+(function(){
+  const secret=['d','a','t','i'];
+  let typed=[];
+  document.addEventListener('keydown',function(e){
+    typed.push(e.key.toLowerCase());
+    if(typed.length>secret.length) typed.shift();
+    if(typed.join('')===secret.join('')){ typed=[]; showEgg(); }
   });
-  c.addEventListener('mouseleave',()=>{ c.style.transform=''; c.style.transition='transform .4s ease'; });
-});
+  function showEgg(){
+    if(document.getElementById('egg-overlay')) return;
+    const ov=document.createElement('div');
+    ov.id='egg-overlay';
+    ov.innerHTML=`
+      <div id="egg-box">
+        <div id="egg-header">
+          <span class="dot dr"></span><span class="dot dy"></span><span class="dot dg"></span>
+          <span style="margin-left:8px;font-size:10px;letter-spacing:2px;color:var(--muted)">overclock_secret.exe</span>
+        </div>
+        <div id="egg-body">
+          <p id="el1"></p><p id="el2"></p><p id="el3"></p><p id="el4"></p><p id="el5"></p>
+          <p id="egg-close-hint" style="display:none">[ pressione ESC ou clique para fechar ]</p>
+        </div>
+      </div>`;
+    document.body.appendChild(ov);
+    ov.addEventListener('click',()=>ov.remove());
+    const esc=(e)=>{ if(e.key==='Escape'){ ov.remove(); document.removeEventListener('keydown',esc); } };
+    document.addEventListener('keydown',esc);
+    const lines=[
+      {id:'el1',text:'> ACESSO AUTORIZADO',delay:0},
+      {id:'el2',text:'> IDENTIFICANDO USUÁRIO... MEMBRO DO DATI DETECTADO.',delay:700},
+      {id:'el3',text:'> CARREGANDO RECOMPENSA...',delay:1500},
+      {id:'el4',text:'>> VOCÊ GANHOU +100 CODE-CODES <<',delay:2400,hi:true},
+      {id:'el5',text:'> Mostre essa tela no credenciamento para resgatar.',delay:3200},
+    ];
+    lines.forEach(({id,text,delay,hi})=>{
+      setTimeout(()=>{
+        const el=document.getElementById(id);
+        if(!el) return;
+        if(hi) el.classList.add('egg-highlight');
+        let i=0;
+        const t=setInterval(()=>{ el.textContent+=text[i++]; if(i>=text.length){ clearInterval(t); if(id==='el5') document.getElementById('egg-close-hint').style.display='block'; } },28);
+      },delay);
+    });
+  }
+})();
 </script>
 </body>
 </html>
