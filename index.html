@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OVERCLOCK SUMMIT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #05050A;
+  --red: #FF2442;
+  --orange: #FF6B1A;
+  --gold: #FFB800;
+  --blue: #0AF0FF;
+  --navy: #0A0A1F;
+  --white: #F0EEE8;
+  --gray: #888899;
+  --card: rgba(255,255,255,0.03);
+  --border: rgba(255,255,255,0.08);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: 'Space Mono', monospace;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* CUSTOM CURSOR */
+#cursor {
+  position: fixed; width: 12px; height: 12px;
+  background: var(--red); border-radius: 50%;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%,-50%);
+  transition: transform 0.1s, background 0.2s;
+  mix-blend-mode: difference;
+}
+#cursor-ring {
+  position: fixed; width: 36px; height: 36px;
+  border: 1px solid var(--red); border-radius: 50%;
+  pointer-events: none; z-index: 9998;
+  transform: translate(-50%,-50%);
+  transition: all 0.15s ease;
+  opacity: 0.5;
+}
+
+/* CANVAS BACKGROUND */
+#canvas-bg {
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 0; opacity: 0.35;
+}
+
+/* NOISE OVERLAY */
+body::after {
+  content: '';
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 1; opacity: 0.4;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 48px;
+  background: linear-gradient(to bottom, rgba(5,5,10,0.95), transparent);
+  backdrop-filter: blur(2px);
+}
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px; letter-spacing: 4px;
+  color: var(--white);
+}
+.nav-logo span { color: var(--red); }
+.nav-links { display: flex; gap: 32px; }
+.nav-links a {
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--gray); text-decoration: none;
+  transition: color 0.2s;
+  position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0;
+  width: 0; height: 1px; background: var(--red);
+  transition: width 0.3s;
+}
+.nav-links a:hover { color: var(--white); }
+.nav-links a:hover::after { width: 100%; }
+.nav-cta {
+  padding: 10px 24px;
+  border: 1px solid var(--red);
+  color: var(--red); font-size: 11px;
+  letter-spacing: 2px; text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s;
+  font-family: 'Space Mono', monospace;
+}
+.nav-cta:hover { background: var(--red); color: var(--bg); }
+
+/* SECTIONS */
+section { position: relative; z-index: 2; }
+
+/* HERO */
+#hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  padding: 120px 48px 80px;
+  position: relative; overflow: hidden;
+}
+
+.hero-eyebrow {
+  font-size: 11px; letter-spacing: 6px;
+  text-transform: uppercase; color: var(--red);
+  margin-bottom: 32px;
+  animation: fadeUp 1s ease both;
+}
+
+.hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(80px, 15vw, 200px);
+  line-height: 0.88;
+  letter-spacing: 2px;
+  animation: fadeUp 1s ease 0.1s both;
+  position: relative;
+}
+.hero-title .line1 { display: block; color: var(--white); }
+.hero-title .line2 {
+  display: block;
+  -webkit-text-stroke: 2px var(--red);
+  color: transparent;
+  position: relative;
+}
+.hero-title .line2::after {
+  content: 'SUMMIT';
+  position: absolute; left: 0; top: 0;
+  color: var(--red);
+  clip-path: inset(0 100% 0 0);
+  animation: glitch-reveal 3s ease 1.5s forwards;
+}
+
+.hero-sub {
+  font-size: 13px; line-height: 1.8;
+  color: var(--gray); max-width: 520px;
+  margin: 40px auto 0;
+  animation: fadeUp 1s ease 0.3s both;
+  letter-spacing: 0.5px;
+}
+
+.hero-date {
+  display: flex; align-items: center; gap: 24px;
+  justify-content: center;
+  margin-top: 56px;
+  animation: fadeUp 1s ease 0.4s both;
+}
+.date-chip {
+  padding: 8px 20px;
+  border: 1px solid var(--border);
+  font-size: 11px; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--gray);
+}
+.date-chip span { color: var(--gold); }
+
+.hero-scroll {
+  position: absolute; bottom: 40px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center;
+  gap: 8px;
+  font-size: 10px; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--gray);
+  animation: fadeIn 2s ease 2s both;
+}
+.scroll-line {
+  width: 1px; height: 60px;
+  background: linear-gradient(to bottom, var(--gray), transparent);
+  animation: scrollPulse 2s ease infinite;
+}
+
+/* DIAGONAL DIVIDER */
+.diagonal {
+  width: 100%; height: 80px;
+  background: var(--bg);
+  clip-path: polygon(0 0, 100% 40%, 100% 100%, 0 100%);
+}
+
+/* STATS STRIP */
+#stats {
+  background: var(--red);
+  padding: 0;
+  overflow: hidden;
+}
+.stats-strip {
+  display: flex;
+  animation: marquee 20s linear infinite;
+  white-space: nowrap;
+}
+.stats-strip-inner {
+  display: flex; align-items: center; gap: 0;
+  flex-shrink: 0;
+}
+.stat-item {
+  display: flex; align-items: center; gap: 20px;
+  padding: 16px 40px;
+  border-right: 1px solid rgba(255,255,255,0.2);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px; letter-spacing: 3px;
+  color: var(--bg);
+}
+.stat-item em { opacity: 0.6; font-style: normal; font-size: 13px; }
+
+/* ABOUT */
+#about {
+  padding: 120px 48px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.section-label {
+  font-size: 10px; letter-spacing: 5px;
+  text-transform: uppercase; color: var(--red);
+  margin-bottom: 20px; display: block;
+}
+.about-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: center;
+}
+.about-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(48px, 6vw, 80px);
+  line-height: 0.95;
+  margin-bottom: 32px;
+}
+.about-title em {
+  font-style: normal;
+  -webkit-text-stroke: 1px var(--red);
+  color: transparent;
+}
+.about-body {
+  font-size: 13px; line-height: 2;
+  color: var(--gray); margin-bottom: 24px;
+}
+.about-visual {
+  position: relative; height: 480px;
+}
+.about-frame {
+  position: absolute; inset: 0;
+  border: 1px solid var(--border);
+}
+.about-frame::before {
+  content: ''; position: absolute;
+  top: -1px; left: 24px; right: 24px; height: 3px;
+  background: linear-gradient(90deg, transparent, var(--red), transparent);
+}
+.code-rain {
+  position: absolute; inset: 0;
+  overflow: hidden; opacity: 0.4;
+  font-size: 11px; color: var(--blue);
+  font-family: 'Space Mono', monospace;
+}
+.big-number {
+  position: absolute; bottom: 24px; right: 24px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 120px; line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255,36,66,0.3);
+}
+.corner-tag {
+  position: absolute; padding: 6px 12px;
+  background: rgba(255,36,66,0.1);
+  border: 1px solid rgba(255,36,66,0.3);
+  font-size: 10px; letter-spacing: 2px;
+  color: var(--red); text-transform: uppercase;
+}
+.corner-tag.tl { top: 16px; left: 16px; }
+.corner-tag.br { bottom: 16px; right: 16px; }
+
+/* DIAS */
+#days {
+  padding: 80px 0;
+  background: linear-gradient(180deg, var(--bg) 0%, #0A0015 50%, var(--bg) 100%);
+}
+.days-header {
+  text-align: center;
+  padding: 0 48px 80px;
+}
+.days-header h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(48px, 8vw, 100px);
+  line-height: 1;
+}
+.days-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  max-width: 1400px; margin: 0 auto;
+  padding: 0 48px;
+}
+.day-card {
+  padding: 56px 40px;
+  border: 1px solid var(--border);
+  border-right: none;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.4s;
+}
+.day-card:last-child { border-right: 1px solid var(--border); }
+.day-card::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: var(--day-color, var(--red));
+}
+.day-card:hover { background: rgba(255,255,255,0.02); }
+.day-number {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 100px; line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--day-color, var(--red));
+  opacity: 0.2;
+  position: absolute; top: 16px; right: 24px;
+}
+.day-label {
+  font-size: 10px; letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--day-color, var(--red));
+  margin-bottom: 12px;
+}
+.day-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 36px; letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+.day-subtitle {
+  font-size: 11px; color: var(--gray);
+  margin-bottom: 32px; letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.day-items { list-style: none; }
+.day-items li {
+  font-size: 12px; line-height: 1.6;
+  color: var(--gray); padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: flex-start; gap: 12px;
+}
+.day-items li::before {
+  content: '›'; color: var(--day-color, var(--red));
+  flex-shrink: 0; margin-top: 1px;
+}
+
+/* MECÂNICAS */
+#mechanics {
+  padding: 120px 48px;
+  max-width: 1200px; margin: 0 auto;
+}
+.mechanics-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  margin-top: 60px;
+}
+.mechanic-card {
+  background: var(--bg);
+  padding: 40px 32px;
+  position: relative; overflow: hidden;
+  transition: background 0.3s;
+}
+.mechanic-card:hover { background: rgba(255,36,66,0.04); }
+.mechanic-icon {
+  font-size: 40px; margin-bottom: 24px;
+  display: block;
+}
+.mechanic-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px; letter-spacing: 2px;
+  margin-bottom: 12px;
+  color: var(--white);
+}
+.mechanic-body {
+  font-size: 12px; line-height: 1.9;
+  color: var(--gray);
+}
+.mechanic-tag {
+  position: absolute; top: 16px; right: 16px;
+  font-size: 9px; letter-spacing: 2px;
+  color: var(--red); text-transform: uppercase;
+  border: 1px solid rgba(255,36,66,0.3);
+  padding: 3px 8px;
+}
+
+/* PARCEIROS */
+#partners {
+  padding: 120px 48px;
+  background: linear-gradient(180deg, var(--bg), #080010);
+  text-align: center;
+}
+.partners-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(40px, 6vw, 72px);
+  margin-bottom: 16px;
+}
+.partners-sub {
+  font-size: 12px; color: var(--gray);
+  letter-spacing: 1px; margin-bottom: 64px;
+}
+.partners-logos {
+  display: flex; flex-wrap: wrap;
+  align-items: center; justify-content: center;
+  gap: 0;
+  max-width: 900px; margin: 0 auto 64px;
+}
+.partner-chip {
+  padding: 20px 36px;
+  border: 1px solid var(--border);
+  margin: -1px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px; letter-spacing: 3px;
+  color: var(--gray);
+  transition: all 0.3s;
+  position: relative; overflow: hidden;
+}
+.partner-chip::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--red); transform: scaleX(0);
+  transform-origin: left; transition: transform 0.3s;
+  z-index: 0;
+}
+.partner-chip:hover { color: var(--bg); border-color: var(--red); z-index: 1; }
+.partner-chip:hover::before { transform: scaleX(1); }
+.partner-chip span { position: relative; z-index: 1; }
+.caldeira-highlight {
+  display: inline-flex; align-items: center; gap: 16px;
+  padding: 24px 40px;
+  border: 1px solid rgba(255,184,0,0.4);
+  background: rgba(255,184,0,0.05);
+  margin-top: 40px;
+  font-size: 12px; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--gold);
+}
+.caldeira-highlight strong {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px; letter-spacing: 3px;
+}
+
+/* COUNTDOWN */
+#countdown {
+  padding: 100px 48px;
+  text-align: center;
+  position: relative;
+}
+#countdown::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(255,36,66,0.06), transparent);
+  pointer-events: none;
+}
+.countdown-label {
+  font-size: 11px; letter-spacing: 5px;
+  text-transform: uppercase; color: var(--gray);
+  margin-bottom: 48px; display: block;
+}
+.countdown-grid {
+  display: flex; align-items: center;
+  justify-content: center; gap: 0;
+  flex-wrap: wrap;
+}
+.cd-block {
+  padding: 32px 48px;
+  border: 1px solid var(--border);
+  margin: -1px;
+  min-width: 140px;
+}
+.cd-number {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 80px; line-height: 1;
+  color: var(--red);
+  display: block;
+}
+.cd-unit {
+  font-size: 10px; letter-spacing: 4px;
+  text-transform: uppercase; color: var(--gray);
+}
+.cd-sep {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 60px; color: var(--border);
+  padding: 0 4px;
+  animation: blink 1s step-end infinite;
+}
+
+/* COTAS */
+#pricing {
+  padding: 120px 48px;
+  max-width: 1200px; margin: 0 auto;
+}
+.pricing-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--border);
+  margin-top: 60px;
+}
+.pricing-card {
+  background: var(--bg);
+  padding: 48px 32px;
+  position: relative; overflow: hidden;
+  transition: transform 0.3s;
+}
+.pricing-card.featured {
+  background: rgba(255,36,66,0.06);
+  border-top: 2px solid var(--red);
+}
+.pricing-card:hover { transform: translateY(-4px); }
+.pricing-tier {
+  font-size: 10px; letter-spacing: 4px;
+  text-transform: uppercase; color: var(--red);
+  margin-bottom: 16px;
+}
+.pricing-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 44px; letter-spacing: 2px; margin-bottom: 32px;
+}
+.pricing-features { list-style: none; margin-bottom: 40px; }
+.pricing-features li {
+  font-size: 12px; color: var(--gray);
+  padding: 10px 0; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 12px;
+}
+.pricing-features li::before { content: '✓'; color: var(--red); flex-shrink: 0; }
+.pricing-cta {
+  display: block; padding: 14px 24px;
+  text-align: center; text-decoration: none;
+  font-size: 11px; letter-spacing: 3px;
+  text-transform: uppercase;
+  border: 1px solid var(--red); color: var(--red);
+  transition: all 0.3s; font-family: 'Space Mono', monospace;
+}
+.pricing-card.featured .pricing-cta {
+  background: var(--red); color: var(--bg);
+}
+.pricing-cta:hover { background: var(--red); color: var(--bg); }
+
+/* CTA FINAL */
+#final-cta {
+  padding: 160px 48px;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+#final-cta::before {
+  content: ''; position: absolute; inset: 0;
+  background: 
+    radial-gradient(ellipse 60% 40% at 50% 50%, rgba(255,36,66,0.12), transparent),
+    radial-gradient(ellipse 40% 30% at 30% 60%, rgba(10,240,255,0.04), transparent);
+}
+.final-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(60px, 12vw, 160px);
+  line-height: 0.9;
+  position: relative; z-index: 1;
+}
+.final-title .stroke {
+  -webkit-text-stroke: 1.5px var(--red);
+  color: transparent;
+}
+.final-sub {
+  font-size: 13px; color: var(--gray);
+  max-width: 480px; margin: 32px auto 48px;
+  line-height: 1.9; position: relative; z-index: 1;
+}
+.final-buttons {
+  display: flex; gap: 16px; justify-content: center;
+  flex-wrap: wrap; position: relative; z-index: 1;
+}
+.btn-primary {
+  padding: 16px 40px;
+  background: var(--red); color: var(--bg);
+  font-size: 12px; letter-spacing: 3px;
+  text-transform: uppercase; text-decoration: none;
+  font-family: 'Space Mono', monospace;
+  transition: all 0.3s; border: 1px solid var(--red);
+  position: relative; overflow: hidden;
+}
+.btn-primary::after {
+  content: ''; position: absolute; inset: 0;
+  background: rgba(255,255,255,0.15);
+  transform: translateX(-100%) skewX(-12deg);
+  transition: transform 0.4s;
+}
+.btn-primary:hover::after { transform: translateX(100%) skewX(-12deg); }
+.btn-secondary {
+  padding: 16px 40px;
+  border: 1px solid var(--border); color: var(--white);
+  font-size: 12px; letter-spacing: 3px;
+  text-transform: uppercase; text-decoration: none;
+  font-family: 'Space Mono', monospace;
+  transition: all 0.3s;
+}
+.btn-secondary:hover { border-color: var(--white); }
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 40px 48px;
+  display: flex; align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap; gap: 24px;
+  position: relative; z-index: 2;
+}
+.footer-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px; letter-spacing: 4px;
+}
+.footer-logo span { color: var(--red); }
+.footer-copy { font-size: 11px; color: var(--gray); letter-spacing: 1px; }
+.footer-links { display: flex; gap: 24px; }
+.footer-links a { font-size: 11px; color: var(--gray); text-decoration: none; letter-spacing: 1px; transition: color 0.2s; }
+.footer-links a:hover { color: var(--red); }
+
+/* SCROLL REVEAL */
+.reveal {
+  opacity: 0; transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+  opacity: 1; transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+/* KEYFRAMES */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes glitch-reveal {
+  0% { clip-path: inset(0 100% 0 0); }
+  100% { clip-path: inset(0 0% 0 0); }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(0.7); }
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+@keyframes scanline {
+  0% { top: -10%; }
+  100% { top: 110%; }
+}
+
+/* GLITCH TEXT */
+.glitch {
+  position: relative;
+}
+.glitch::before, .glitch::after {
+  content: attr(data-text);
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%;
+}
+.glitch::before {
+  color: var(--blue);
+  animation: glitch-a 3s infinite linear alternate-reverse;
+  clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+}
+.glitch::after {
+  color: var(--red);
+  animation: glitch-b 3s infinite linear alternate-reverse;
+  clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+}
+@keyframes glitch-a {
+  0%, 90%, 100% { transform: translate(0); }
+  92% { transform: translate(-2px, 1px); }
+  94% { transform: translate(2px, -1px); }
+  96% { transform: translate(-1px, 2px); }
+}
+@keyframes glitch-b {
+  0%, 90%, 100% { transform: translate(0); }
+  92% { transform: translate(2px, -1px); }
+  94% { transform: translate(-2px, 1px); }
+  96% { transform: translate(1px, -2px); }
+}
+
+/* SCANLINE effect on cards */
+.scanline-card {
+  position: relative; overflow: hidden;
+}
+.scanline-card::after {
+  content: '';
+  position: absolute; left: 0; right: 0; height: 60px;
+  background: linear-gradient(transparent, rgba(10,240,255,0.03), transparent);
+  animation: scanline 4s linear infinite;
+  pointer-events: none;
+}
+
+/* SVG ICONS */
+svg { vertical-align: middle; }
+.mechanic-icon svg { display: block; }
+
+/* MOBILE */
+@media (max-width: 768px) {
+  nav { padding: 16px 24px; }
+  .nav-links { display: none; }
+  #about, #mechanics, #pricing { padding: 80px 24px; }
+  .about-grid { grid-template-columns: 1fr; }
+  .about-visual { display: none; }
+  .days-grid { grid-template-columns: 1fr; padding: 0 24px; }
+  .day-card { border-right: 1px solid var(--border); border-bottom: none; }
+  .day-card:last-child { border-bottom: 1px solid var(--border); }
+  .mechanics-grid { grid-template-columns: 1fr; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .countdown-grid { gap: 16px; }
+  .cd-block { min-width: 100px; padding: 20px 24px; }
+  .cd-number { font-size: 56px; }
+  #final-cta { padding: 100px 24px; }
+  footer { padding: 32px 24px; flex-direction: column; text-align: center; }
+  #hero { padding: 80px 24px 80px; }
+  #days .days-header { padding: 0 24px 60px; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="canvas-bg"></canvas>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> OVER<span>CLOCK</span></div>
+  <div class="nav-links">
+    <a href="#about">Sobre</a>
+    <a href="#days">Programação</a>
+    <a href="#partners">Parceiros</a>
+    <a href="#pricing">Cotas</a>
+  </div>
+  <a href="#final-cta" class="nav-cta">Ser Parceiro</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <p class="hero-eyebrow">// EVENTO · TECNOLOGIA · INOVAÇÃO · RS</p>
+  <h1 class="hero-title">
+    <span class="line1 glitch" data-text="OVERCLOCK">OVERCLOCK</span>
+    <span class="line2">SUMMIT</span>
+  </h1>
+  <p class="hero-sub">
+    3 dias para tirar seu cérebro da zona de conforto. Um evento intenso onde tecnologia, inovação e comunidade colidem no limite da capacidade criativa.
+  </p>
+  <div class="hero-date">
+    <div class="date-chip">Edição <span>2025</span></div>
+    <div class="date-chip">Rio Grande do Sul</div>
+    <div class="date-chip"><span>3</span> dias</div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    scroll
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div id="stats">
+  <div class="stats-strip">
+    <div class="stats-strip-inner">
+      <div class="stat-item"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> <span>3 DIAS DE IMERSÃO</span></div>
+      <div class="stat-item"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> <span>TRILHAS TÉCNICAS</span></div>
+      <div class="stat-item"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg> <span>ROCK AO VIVO</span></div>
+      <div class="stat-item"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/><path d="M7 4h10v8a5 5 0 0 1-10 0V4z"/><path d="M7 9H4.5a2.5 2.5 0 0 1 0-5H7"/><path d="M17 9h2.5a2.5 2.5 0 0 0 0-5H17"/></svg> <span>TORNEIO TECH STRIKE</span></div>
+      <div class="stat-item"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> <span>FEIRA DE CARREIRAS</span></div>
+      <div class="stat-item"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-1.04-4.69 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.77A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 1.04-4.69 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.77A2.5 2.5 0 0 0 14.5 2Z"/></svg> <span>FISH BOWL · DEBUGGING</span></div>
+      <div class="stat-item"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="10" y1="12" y2="12"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="15" x2="15.01" y1="13" y2="13"/><line x1="18" x2="18.01" y1="11" y2="11"/><rect width="20" height="12" x="2" y="6" rx="2"/></svg> <span>GAMIFICAÇÃO TOTAL</span></div>
+      <div class="stat-item"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg> <span>DO BUG AO BUSINESS</span></div>
+    </div>
+    <div class="stats-strip-inner" aria-hidden="true">
+      <div class="stat-item"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> <span>3 DIAS DE IMERSÃO</span></div>
+      <div class="stat-item"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> <span>TRILHAS TÉCNICAS</span></div>
+      <div class="stat-item"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg> <span>ROCK AO VIVO</span></div>
+      <div class="stat-item"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/><path d="M7 4h10v8a5 5 0 0 1-10 0V4z"/><path d="M7 9H4.5a2.5 2.5 0 0 1 0-5H7"/><path d="M17 9h2.5a2.5 2.5 0 0 0 0-5H17"/></svg> <span>TORNEIO TECH STRIKE</span></div>
+      <div class="stat-item"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> <span>FEIRA DE CARREIRAS</span></div>
+      <div class="stat-item"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-1.04-4.69 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.77A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 1.04-4.69 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.77A2.5 2.5 0 0 0 14.5 2Z"/></svg> <span>FISH BOWL · DEBUGGING</span></div>
+      <div class="stat-item"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="10" y1="12" y2="12"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="15" x2="15.01" y1="13" y2="13"/><line x1="18" x2="18.01" y1="11" y2="11"/><rect width="20" height="12" x="2" y="6" rx="2"/></svg> <span>GAMIFICAÇÃO TOTAL</span></div>
+      <div class="stat-item"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg> <span>DO BUG AO BUSINESS</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div>
+      <span class="section-label reveal">// 01 — O QUE É</span>
+      <h2 class="about-title reveal reveal-delay-1">
+        ACELERE<br>
+        <em>ALÉM DO</em><br>
+        LIMITE
+      </h2>
+      <p class="about-body reveal reveal-delay-2">
+        O Overclock Summit nasceu para criar um marco no ecossistema de tecnologia gaúcho. Inspirado nos maiores eventos do Brasil — FIAP NEXT (6.000+ pessoas), FIAP Connect Summit e Code Con — mas com identidade própria, raízes no Rio Grande do Sul e ancoragem no Instituto Caldeira.
+      </p>
+      <p class="about-body reveal reveal-delay-3">
+        Não é uma conferência. É uma arena onde estudantes, profissionais e empresas convergem para competir, aprender, criar e se conectar. Cada dia tem um objetivo cirúrgico. Cada mecânica foi desenhada para maximizar impacto.
+      </p>
+    </div>
+    <div class="about-visual reveal scanline-card">
+      <div class="about-frame"></div>
+      <div class="code-rain" id="code-rain"></div>
+      <div class="corner-tag tl">EST. 2025</div>
+      <div class="corner-tag br">RIO GRANDE DO SUL</div>
+      <div class="big-number">3</div>
+    </div>
+  </div>
+</section>
+
+<!-- DAYS -->
+<section id="days">
+  <div class="days-header">
+    <span class="section-label reveal">// 02 — OS TRÊS DIAS</span>
+    <h2 class="reveal reveal-delay-1">A JORNADA</h2>
+  </div>
+  <div class="days-grid">
+    <!-- DIA 1 -->
+    <div class="day-card reveal scanline-card" style="--day-color: #FF2442">
+      <div class="day-number">01</div>
+      <p class="day-label">Dia 01</p>
+      <h3 class="day-title">THE START</h3>
+      <p class="day-subtitle">Abertura · Tendências · Mindset</p>
+      <ul class="day-items">
+        <li>Credenciamento com customização de credencial (adesivos de linguagens)</li>
+        <li>Abertura Oficial com Reitoria + Instituto Caldeira</li>
+        <li>Keynote Magna: "Do Bug ao Business"</li>
+        <li>Painel: Oracle, Red Hat, Siemens Brasil</li>
+        <li>Dell Technologies + Altus Automação</li>
+        <li>Lightning Talks da comunidade</li>
+        <li>Show de Rock ao Vivo <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></li>
+      </ul>
+    </div>
+    <!-- DIA 2 -->
+    <div class="day-card reveal reveal-delay-1 scanline-card" style="--day-color: #0AF0FF">
+      <div class="day-number">02</div>
+      <p class="day-label">Dia 02</p>
+      <h3 class="day-title">DEEP DIVE</h3>
+      <p class="day-subtitle">Trilhas Técnicas · Mão na Massa</p>
+      <ul class="day-items">
+        <li>3 Trilhas simultâneas: Backend / Frontend / Dados & IA</li>
+        <li>Espaço Sandbox — palestras curtas fora do óbvio</li>
+        <li>Fish Bowl: resolução de bug ao vivo em círculo</li>
+        <li>Hackathon Sprint de 2h com times formados no evento</li>
+        <li>Code-Codes: desafios escondidos pelo espaço</li>
+        <li>Placar ao vivo nos telões</li>
+        <li>Anúncio dos destaques do dia</li>
+      </ul>
+    </div>
+    <!-- DIA 3 -->
+    <div class="day-card reveal reveal-delay-2 scanline-card" style="--day-color: #FFB800">
+      <div class="day-number">03</div>
+      <p class="day-label">Dia 03</p>
+      <h3 class="day-title">THE MATCH</h3>
+      <p class="day-subtitle">Finais · Conexão · Arena</p>
+      <ul class="day-items">
+        <li>Student Talks: projetos académicos e do GitHub</li>
+        <li>Banca de avaliação com profissionais do mercado</li>
+        <li>Feira de Contratação (Retta, Interact, Clínica Experts…)</li>
+        <li>Painel Tech Builder — carreira e futuro tech gaúcho</li>
+        <li>Grande Final Tech Strike — CS ao vivo na arena</li>
+        <li>Premiação Geral + Code-Codes</li>
+        <li>Happy Hour de Encerramento <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 22h8"/><path d="M7 10h10"/><path d="M12 15v7"/><path d="M12 15a5 5 0 0 0 5-5c0-2-.5-4-2-8H7c-1.5 4-2 6-2 8a5 5 0 0 0 5 5z"/></svg></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- MECÂNICAS -->
+<section id="mechanics">
+  <span class="section-label reveal">// 03 — MECÂNICAS DE ENGAJAMENTO</span>
+  <h2 class="about-title reveal reveal-delay-1" style="font-family:'Bebas Neue',sans-serif; font-size:clamp(40px,6vw,72px); margin-bottom:0">
+    FORA DA<br><em style="-webkit-text-stroke:1px var(--red);color:transparent">CAIXA</em>
+  </h2>
+  <div class="mechanics-grid">
+    <div class="mechanic-card reveal">
+      <span class="mechanic-tag">Gamificação</span>
+      <span class="mechanic-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="10" y1="12" y2="12"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="15" x2="15.01" y1="13" y2="13"/><line x1="18" x2="18.01" y1="11" y2="11"/><rect width="20" height="12" x="2" y="6" rx="2"/></svg></span>
+      <h3 class="mechanic-title">CODE-CODES</h3>
+      <p class="mechanic-body">Desafios e easter eggs espalhados pelos 3 dias. Participantes acumulam pontos, o placar fica ao vivo nos telões. Quem mais pontuar leva prêmios e vantagens exclusivas no encerramento.</p>
+    </div>
+    <div class="mechanic-card reveal reveal-delay-1">
+      <span class="mechanic-tag">Experiência</span>
+      <span class="mechanic-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M13 9h4"/><path d="M13 13h4"/></svg></span>
+      <h3 class="mechanic-title">CREDENCIAL VIVA</h3>
+      <p class="mechanic-body">No check-in, cada participante recebe uma credencial em branco e cola adesivos das linguagens e tecnologias que domina. Identidade imediata, conversa orgânica, senso de tribo desde o primeiro segundo.</p>
+    </div>
+    <div class="mechanic-card reveal reveal-delay-2">
+      <span class="mechanic-tag">Competição</span>
+      <span class="mechanic-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 12c.94-3.46 4.94-6 8.5-6 3.56 0 6.06 2.54 7 6-.94 3.46-3.44 6-7 6s-7.56-2.54-8.5-6z"/><path d="M18 12h.5"/><path d="M4.5 15.5 2 18"/><path d="M4.5 8.5 2 6"/></svg></span>
+      <h3 class="mechanic-title">FISH BOWL</h3>
+      <p class="mechanic-body">Grupo de devs em círculo resolvendo um bug complexo ao vivo. Público assiste e pode entrar no círculo. Raciocínio coletivo, pressão real, aprendizado que não acontece em sala de aula.</p>
+    </div>
+    <div class="mechanic-card reveal">
+      <span class="mechanic-tag">Protagonismo</span>
+      <span class="mechanic-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16"/></svg></span>
+      <h3 class="mechanic-title">GITHUB OPEN STAGE</h3>
+      <p class="mechanic-body">Alunos submetem projetos acadêmicos e repositórios pessoais. Uma banca do mercado avalia ao vivo. Os melhores ganham destaque direto na Feira de Contratação — do código ao contrato.</p>
+    </div>
+    <div class="mechanic-card reveal reveal-delay-1">
+      <span class="mechanic-tag">Identidade</span>
+      <span class="mechanic-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>
+      <h3 class="mechanic-title">ROCK & CODE</h3>
+      <p class="mechanic-body">Atração musical ao vivo no encerramento do Dia 1. A mesma fórmula do FIAP NEXT — que trouxe Di Ferrero para 6.000 pessoas. Tecnologia e cultura pop se fundem. Não é uma palestra. É um festival.</p>
+    </div>
+    <div class="mechanic-card reveal reveal-delay-2">
+      <span class="mechanic-tag">Comunicação</span>
+      <span class="mechanic-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
+      <h3 class="mechanic-title">BAIXA LATÊNCIA</h3>
+      <p class="mechanic-body">Toda a coordenação de salas, códigos de desafio e avisos em tempo real via comunidade no WhatsApp. O evento é fluido, responsivo e mantém o público aquecido durante os 3 dias inteiros.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PARCEIROS -->
+<section id="partners">
+  <span class="section-label reveal">// 04 — ECOSSISTEMA</span>
+  <h2 class="partners-title reveal reveal-delay-1">QUEM ESTÁ<br>NO CIRCUITO</h2>
+  <p class="partners-sub reveal reveal-delay-2">Palestrantes confirmados e em contato · Parceiros institucionais · Hub âncora</p>
+
+  <div class="partners-logos reveal">
+    <div class="partner-chip"><span>ORACLE</span></div>
+    <div class="partner-chip"><span>RED HAT</span></div>
+    <div class="partner-chip"><span>SIEMENS</span></div>
+    <div class="partner-chip"><span>DELL</span></div>
+    <div class="partner-chip"><span>ALTUS</span></div>
+    <div class="partner-chip"><span>RETTA</span></div>
+    <div class="partner-chip"><span>INTERACT</span></div>
+    <div class="partner-chip"><span>CLÍNICA EXPERTS</span></div>
+  </div>
+
+  <div class="caldeira-highlight reveal">
+    <span><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg></span>
+    <div>
+      <strong>INSTITUTO CALDEIRA</strong><br>
+      <span style="font-size:11px; opacity:0.8">Parceiro âncora proposto · Hub de inovação gaúcho · 22.000 m² · 150+ organizações</span>
+    </div>
+  </div>
+</section>
+
+<!-- COUNTDOWN -->
+<section id="countdown">
+  <span class="countdown-label">// CONTAGEM REGRESSIVA ATÉ O OVERCLOCK SUMMIT</span>
+  <div class="countdown-grid">
+    <div class="cd-block">
+      <span class="cd-number" id="cd-days">--</span>
+      <span class="cd-unit">Dias</span>
+    </div>
+    <span class="cd-sep">:</span>
+    <div class="cd-block">
+      <span class="cd-number" id="cd-hours">--</span>
+      <span class="cd-unit">Horas</span>
+    </div>
+    <span class="cd-sep">:</span>
+    <div class="cd-block">
+      <span class="cd-number" id="cd-mins">--</span>
+      <span class="cd-unit">Minutos</span>
+    </div>
+    <span class="cd-sep">:</span>
+    <div class="cd-block">
+      <span class="cd-number" id="cd-secs">--</span>
+      <span class="cd-unit">Segundos</span>
+    </div>
+  </div>
+</section>
+
+<!-- COTAS -->
+<section id="pricing">
+  <span class="section-label reveal">// 05 — SEJA PARTE</span>
+  <h2 class="about-title reveal reveal-delay-1" style="font-family:'Bebas Neue',sans-serif; font-size:clamp(40px,6vw,72px); margin-bottom:8px">COTAS DE<br>PARCERIA</h2>
+  <p style="font-size:12px; color:var(--gray); margin-top:8px" class="reveal reveal-delay-2">Valores e benefícios personalizáveis · Negociação direta</p>
+  <div class="pricing-grid">
+    <div class="pricing-card reveal scanline-card">
+      <p class="pricing-tier">// COTA 01</p>
+      <h3 class="pricing-name">OVERCLOCK DEV</h3>
+      <ul class="pricing-features">
+        <li>Logo nos materiais do evento</li>
+        <li>Distribuição de brindes com identidade da marca</li>
+        <li>Acesso ao banco de projetos estudantis</li>
+        <li>Presença na comunidade WhatsApp do evento</li>
+      </ul>
+      <a href="mailto:da.ti@univates.br" class="pricing-cta">Quero participar</a>
+    </div>
+    <div class="pricing-card featured reveal reveal-delay-1 scanline-card">
+      <p class="pricing-tier">// COTA 02 · DESTAQUE</p>
+      <h3 class="pricing-name">OVERCLOCK PRO</h3>
+      <ul class="pricing-features">
+        <li>Stand exclusivo na Feira de Contratação</li>
+        <li>Palestra em trilha temática (50 min)</li>
+        <li>Logo em destaque em todos os materiais</li>
+        <li>Submissão de desafio técnico (Code-Codes)</li>
+        <li>Acesso VIP aos projetos finalistas</li>
+        <li>Menção no palco principal</li>
+      </ul>
+      <a href="mailto:da.ti@univates.br" class="pricing-cta">Quero participar</a>
+    </div>
+    <div class="pricing-card reveal reveal-delay-2 scanline-card">
+      <p class="pricing-tier">// COTA 03 · MÁXIMO</p>
+      <h3 class="pricing-name">OVERCLOCK MASTER</h3>
+      <ul class="pricing-features">
+        <li>Naming rights do evento</li>
+        <li>Logo em posição de destaque absoluto</li>
+        <li>Keynote exclusiva de abertura</li>
+        <li>Acesso VIP ao ecossistema de talentos</li>
+        <li>Mesa executiva no Happy Hour</li>
+        <li>Co-branding em toda a comunicação</li>
+        <li>1 vaga exclusiva · Negociação direta</li>
+      </ul>
+      <a href="mailto:da.ti@univates.br" class="pricing-cta">Negociar diretamente</a>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section id="final-cta">
+  <h2 class="final-title">
+    <span class="stroke">VOCÊ</span><br>
+    ESTÁ<br>
+    <span class="stroke">DENTRO?</span>
+  </h2>
+  <p class="final-sub">
+    O Overclock Summit está construindo o maior evento de tecnologia do Rio Grande do Sul. Empresas, instituições e profissionais que queiram fazer parte desta história têm uma janela de oportunidade agora.
+  </p>
+  <div class="final-buttons">
+    <a href="mailto:da.ti@univates.br" class="btn-primary">Quero ser parceiro</a>
+    <a href="#about" class="btn-secondary">Saber mais</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> OVER<span>CLOCK</span> SUMMIT</div>
+  <p class="footer-copy">© 2025 Overclock Summit · Rio Grande do Sul · Brasil</p>
+  <div class="footer-links">
+    <a href="#about">Sobre</a>
+    <a href="#days">Programação</a>
+    <a href="#pricing">Parceiros</a>
+  </div>
+</footer>
+
+<script>
+/* ---- CURSOR ---- */
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+function animCursor() {
+  rx += (mx - rx) * 0.18;
+  ry += (my - ry) * 0.18;
+  cursor.style.left = mx + 'px';
+  cursor.style.top = my + 'px';
+  ring.style.left = rx + 'px';
+  ring.style.top = ry + 'px';
+  requestAnimationFrame(animCursor);
+}
+animCursor();
+document.querySelectorAll('a, button').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.transform = 'translate(-50%,-50%) scale(2.5)';
+    ring.style.transform = 'translate(-50%,-50%) scale(1.5)';
+    ring.style.opacity = '0.2';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+    ring.style.transform = 'translate(-50%,-50%) scale(1)';
+    ring.style.opacity = '0.5';
+  });
+});
+
+/* ---- CANVAS PARTICLES ---- */
+const canvas = document.getElementById('canvas-bg');
+const ctx = canvas.getContext('2d');
+let W, H, particles = [];
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+class Particle {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * W;
+    this.y = Math.random() * H;
+    this.size = Math.random() * 1.5 + 0.3;
+    this.speedX = (Math.random() - 0.5) * 0.4;
+    this.speedY = (Math.random() - 0.5) * 0.4;
+    this.life = Math.random();
+    this.maxLife = Math.random() * 0.005 + 0.002;
+    this.color = Math.random() > 0.7 ? '#FF2442' : Math.random() > 0.5 ? '#0AF0FF' : '#888899';
+    this.opacity = Math.random() * 0.6 + 0.1;
+  }
+  update() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    this.life += this.maxLife;
+    if (this.x < 0 || this.x > W || this.y < 0 || this.y > H || this.life > 1) this.reset();
+  }
+  draw() {
+    ctx.save();
+    ctx.globalAlpha = this.opacity * Math.sin(this.life * Math.PI);
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+}
+
+for (let i = 0; i < 180; i++) particles.push(new Particle());
+
+// Grid lines
+function drawGrid() {
+  ctx.strokeStyle = 'rgba(255,255,255,0.02)';
+  ctx.lineWidth = 0.5;
+  const gridSize = 80;
+  for (let x = 0; x < W; x += gridSize) {
+    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+  }
+  for (let y = 0; y < H; y += gridSize) {
+    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+  }
+}
+
+// Connection lines between nearby particles
+function drawConnections() {
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < 100) {
+        ctx.save();
+        ctx.globalAlpha = (1 - dist/100) * 0.08;
+        ctx.strokeStyle = '#FF2442';
+        ctx.lineWidth = 0.5;
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.stroke();
+        ctx.restore();
+      }
+    }
+  }
+}
+
+function animateCanvas() {
+  ctx.clearRect(0, 0, W, H);
+  drawGrid();
+  drawConnections();
+  particles.forEach(p => { p.update(); p.draw(); });
+  requestAnimationFrame(animateCanvas);
+}
+animateCanvas();
+
+/* ---- CODE RAIN ---- */
+const rain = document.getElementById('code-rain');
+if (rain) {
+  const chars = ['0','1','</>','{}','()','//','&&','||','fn','px','if','rx','js','py','go','ts','sql','api','ai','ml','git','ssh'];
+  function addChar() {
+    const span = document.createElement('div');
+    span.style.cssText = `
+      position: absolute;
+      left: ${Math.random()*90}%;
+      top: ${Math.random()*100}%;
+      font-size: ${Math.random()*8+8}px;
+      opacity: ${Math.random()*0.6+0.1};
+      color: ${Math.random()>0.5 ? '#0AF0FF' : '#FF2442'};
+      font-family: 'Space Mono', monospace;
+      pointer-events: none;
+      animation: fadeIn ${Math.random()*2+1}s ease both;
+    `;
+    span.textContent = chars[Math.floor(Math.random()*chars.length)];
+    rain.appendChild(span);
+    if (rain.children.length > 40) rain.removeChild(rain.children[0]);
+  }
+  setInterval(addChar, 300);
+}
+
+/* ---- COUNTDOWN ---- */
+// Set event date (adjust as needed — targeting ~6 months from now)
+const eventDate = new Date('2025-11-15T09:00:00-03:00');
+function updateCountdown() {
+  const now = new Date();
+  const diff = eventDate - now;
+  if (diff <= 0) {
+    document.getElementById('cd-days').textContent = '00';
+    document.getElementById('cd-hours').textContent = '00';
+    document.getElementById('cd-mins').textContent = '00';
+    document.getElementById('cd-secs').textContent = '00';
+    return;
+  }
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  document.getElementById('cd-days').textContent = String(d).padStart(2,'0');
+  document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
+  document.getElementById('cd-mins').textContent = String(m).padStart(2,'0');
+  document.getElementById('cd-secs').textContent = String(s).padStart(2,'0');
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+/* ---- SCROLL REVEAL ---- */
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+reveals.forEach(el => observer.observe(el));
+
+/* ---- PARALLAX HERO ---- */
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  const heroTitle = document.querySelector('.hero-title');
+  const heroSub = document.querySelector('.hero-sub');
+  if (heroTitle) heroTitle.style.transform = `translateY(${scrollY * 0.25}px)`;
+  if (heroSub) heroSub.style.transform = `translateY(${scrollY * 0.1}px)`;
+});
+
+/* ---- GLITCH RANDOM TRIGGER ---- */
+setInterval(() => {
+  const el = document.querySelector('.glitch');
+  if (!el) return;
+  el.style.animation = 'none';
+  void el.offsetWidth;
+  el.style.animation = '';
+}, 4000);
+
+/* ---- MOUSE REPEL on PARTNER CHIPS ---- */
+document.querySelectorAll('.partner-chip').forEach(chip => {
+  chip.addEventListener('mousemove', e => {
+    const rect = chip.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width/2;
+    const y = e.clientY - rect.top - rect.height/2;
+    chip.style.transform = `translate(${x*0.04}px, ${y*0.04}px)`;
+  });
+  chip.addEventListener('mouseleave', () => {
+    chip.style.transform = '';
+    chip.style.transition = 'transform 0.4s ease';
+  });
+});
+</script>
+</body>
+</html>
