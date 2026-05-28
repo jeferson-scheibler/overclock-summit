@@ -1089,7 +1089,7 @@ window.addEventListener('scroll', () => {
   if (s) s.style.transform = `translateY(${y * .07}px)`;
 });
 
-/* ── PCB TRACES — #final-cta ── */
+/* ── PCB TRACES — #final-cta (sutil, estruturado) ── */
 (function(){
   const section = document.getElementById('final-cta');
   if (!section) return;
@@ -1099,87 +1099,57 @@ window.addEventListener('scroll', () => {
   section.prepend(cv);
 
   const ctx = cv.getContext('2d');
-  const G = 26; // grid cell px
-  let W, H, segs = [], nodes = [];
-
-  const snap = v => Math.round(v / G) * G;
-  const DX = [G, 0, -G, 0];
-  const DY = [0, G, 0, -G];
-
-  function build() {
-    W = cv.width  = section.offsetWidth;
-    H = cv.height = section.offsetHeight;
-    segs = []; nodes = [];
-
-    const count = Math.floor((W * H) / 2800);
-    for (let i = 0; i < count; i++) {
-      let x = snap(Math.random() * W);
-      let y = snap(Math.random() * H);
-      // bias horizontal — mais parecido com PCB real
-      let dir = Math.random() < 0.65
-        ? (Math.random() < 0.5 ? 0 : 2)
-        : (Math.random() < 0.5 ? 1 : 3);
-      const pts = [{x, y}];
-      const steps = 4 + Math.floor(Math.random() * 14);
-
-      for (let s = 0; s < steps; s++) {
-        const nx = x + DX[dir], ny = y + DY[dir];
-        if (nx < 0 || nx > W || ny < 0 || ny > H) break;
-        x = nx; y = ny;
-        pts.push({x, y});
-        if (Math.random() < 0.28)
-          dir = Math.random() < 0.5 ? (dir + 1) % 4 : (dir + 3) % 4;
-      }
-      if (pts.length < 2) continue;
-
-      segs.push({ pts, baseOp: 0.07 + Math.random() * 0.11, lit: 0 });
-      [pts[0], pts[pts.length - 1]].forEach(p =>
-        nodes.push({ x: p.x, y: p.y, baseOp: 0.2 + Math.random() * 0.2, lit: 0 })
-      );
-    }
-  }
+  const snap = (v, g) => Math.round(v / g) * g;
 
   function draw() {
+    const W = cv.width  = section.offsetWidth;
+    const H = cv.height = section.offsetHeight;
     ctx.clearRect(0, 0, W, H);
-    ctx.lineCap = 'square'; ctx.lineJoin = 'miter'; ctx.lineWidth = 1;
 
-    segs.forEach(s => {
-      const op = s.baseOp + s.lit * 0.38;
-      ctx.strokeStyle = `rgba(0,71,255,${op})`;
-      ctx.shadowBlur  = s.lit > 0.4 ? 5 : 0;
-      ctx.shadowColor = '#0047FF';
+    const G  = Math.max(20, Math.round(W / 44)); // grid step
+    const cy = snap(H / 2, G);
+
+    ctx.strokeStyle = 'rgba(0,71,255,0.13)';
+    ctx.fillStyle   = 'rgba(0,71,255,0.26)';
+    ctx.lineWidth   = 1;
+    ctx.lineCap     = 'square';
+    ctx.lineJoin    = 'miter';
+
+    // Cada traço: array de [x,y] — pode ser linha reta ou L
+    // Lado esquerdo: sai da borda esquerda, vai em direção ao centro-esquerdo
+    const L = [
+      [[0, cy - G*3], [W*.29, cy - G*3]],
+      [[0, cy - G*1.5], [W*.22, cy - G*1.5], [W*.22, cy - G*3]],  // L para cima
+      [[0, cy],       [W*.34, cy]],
+      [[0, cy + G*1.5], [W*.20, cy + G*1.5], [W*.20, cy + G*3]],  // L para baixo
+      [[0, cy + G*3], [W*.27, cy + G*3]],
+    ];
+
+    // Lado direito: espelho
+    const R = [
+      [[W, cy - G*3], [W*.71, cy - G*3]],
+      [[W, cy - G*1.5], [W*.78, cy - G*1.5], [W*.78, cy - G*3]],
+      [[W, cy],       [W*.66, cy]],
+      [[W, cy + G*1.5], [W*.80, cy + G*1.5], [W*.80, cy + G*3]],
+      [[W, cy + G*3], [W*.73, cy + G*3]],
+    ];
+
+    [...L, ...R].forEach(trace => {
+      // linha
       ctx.beginPath();
-      ctx.moveTo(s.pts[0].x, s.pts[0].y);
-      s.pts.slice(1).forEach(p => ctx.lineTo(p.x, p.y));
+      ctx.moveTo(trace[0][0], trace[0][1]);
+      for (let i = 1; i < trace.length; i++) ctx.lineTo(trace[i][0], trace[i][1]);
       ctx.stroke();
-    });
-
-    ctx.shadowBlur = 0;
-    nodes.forEach(n => {
-      const op = n.baseOp + n.lit * 0.55;
-      ctx.fillStyle = `rgba(0,71,255,${op})`;
-      ctx.beginPath(); ctx.arc(n.x, n.y, 2.5, 0, Math.PI * 2); ctx.fill();
+      // pad (bolinha) no ponto interno — último ponto da trilha
+      const end = trace[trace.length - 1];
+      ctx.beginPath();
+      ctx.arc(end[0], end[1], 2.5, 0, Math.PI * 2);
+      ctx.fill();
     });
   }
 
-  let lastTrigger = 0;
-  function animate(ts) {
-    let dirty = false;
-    segs.forEach(s  => { if (s.lit  > 0) { s.lit  = Math.max(0, s.lit  - 0.022); dirty = true; } });
-    nodes.forEach(n => { if (n.lit  > 0) { n.lit  = Math.max(0, n.lit  - 0.035); dirty = true; } });
-
-    if (ts - lastTrigger > 350 + Math.random() * 320) {
-      const s = segs[Math.floor(Math.random() * segs.length)];
-      if (s) { s.lit = 1; dirty = true; }
-      lastTrigger = ts;
-    }
-    if (dirty) draw();
-    requestAnimationFrame(animate);
-  }
-
-  build(); draw();
-  window.addEventListener('resize', () => { build(); draw(); });
-  requestAnimationFrame(animate);
+  draw();
+  window.addEventListener('resize', draw);
 })();
 
 /* ── EASTER EGG — digitar DATI ── */
