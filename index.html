@@ -13,15 +13,15 @@
 html{scroll-behavior:smooth}
 
 :root{
-  --bg:#07070F;
-  --bg2:#0D0D1C;
+  --bg:#0C0C1A;
+  --bg2:#111128;
   --blue:#0047FF;
   --blue-hi:#3B6FFF;
-  --blue-dim:rgba(0,71,255,0.08);
+  --blue-dim:rgba(0,71,255,0.09);
   --white:#F0F0FF;
-  --muted:#484878;
-  --border:rgba(0,71,255,0.14);
-  --card:rgba(7,7,18,0.97);
+  --muted:#5E5E92;
+  --border:rgba(0,71,255,0.18);
+  --card:rgba(12,12,26,0.96);
   --glow:0 0 14px rgba(0,71,255,0.6),0 0 30px rgba(0,71,255,0.22);
   --glow-lg:0 0 24px rgba(0,71,255,0.7),0 0 60px rgba(0,71,255,0.3),0 0 100px rgba(0,71,255,0.1);
 }
@@ -43,10 +43,11 @@ section{position:relative;z-index:2}
 .ambient-light{
   position:fixed;inset:0;z-index:1;pointer-events:none;
   background:
-    radial-gradient(ellipse 75% 55% at 8% 18%,rgba(0,71,255,0.09) 0%,transparent 65%),
-    radial-gradient(ellipse 50% 45% at 92% 52%,rgba(0,71,255,0.07) 0%,transparent 60%),
-    radial-gradient(ellipse 65% 40% at 50% 102%,rgba(0,55,200,0.07) 0%,transparent 70%),
-    radial-gradient(ellipse 120% 95% at 50% 50%,transparent 55%,rgba(0,0,5,0.22) 100%);
+    radial-gradient(ellipse 80% 60% at 5% 15%,rgba(0,71,255,0.16) 0%,transparent 65%),
+    radial-gradient(ellipse 55% 50% at 95% 50%,rgba(0,71,255,0.12) 0%,transparent 60%),
+    radial-gradient(ellipse 70% 45% at 50% 105%,rgba(0,55,200,0.12) 0%,transparent 70%),
+    radial-gradient(ellipse 100% 80% at 50% 0%,rgba(0,40,180,0.06) 0%,transparent 60%),
+    radial-gradient(ellipse 120% 95% at 50% 50%,transparent 50%,rgba(0,0,8,0.14) 100%);
 }
 
 /* ── NAV ── */
@@ -54,9 +55,17 @@ nav{
   position:fixed;inset:0 0 auto 0;z-index:100;
   display:flex;align-items:center;justify-content:space-between;
   padding:20px 52px;
-  background:rgba(7,7,15,0.97);
-  backdrop-filter:blur(18px);
-  border-bottom:1px solid var(--border);
+  background:transparent;
+  backdrop-filter:none;
+  -webkit-backdrop-filter:none;
+  border-bottom:1px solid transparent;
+  transition:background .45s ease,border-color .45s ease,backdrop-filter .45s ease,-webkit-backdrop-filter .45s ease;
+}
+nav.scrolled{
+  background:rgba(10,10,20,0.88);
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
+  border-bottom-color:var(--border);
 }
 .nav-logo{display:flex;align-items:center;text-decoration:none}
 .nav-logo img{height:34px;opacity:.9;transition:opacity .25s}
@@ -93,8 +102,8 @@ nav{
   color:var(--muted);line-height:2.1;z-index:3;
   animation:fadeIn 1s ease 3s both;
 }
-.hud-tl{top:108px;left:64px}
-.hud-tr{top:108px;right:64px;text-align:right}
+.hud-tl{top:88px;left:64px}
+.hud-tr{top:88px;right:64px;text-align:right}
 .hud-bl{bottom:52px;left:64px;display:flex;align-items:center;gap:8px}
 .hud-label{color:var(--blue);display:block;text-transform:uppercase;font-size:9px;letter-spacing:3px;line-height:1.4;margin-top:4px}
 .hud-val{display:block;color:var(--white)}
@@ -263,7 +272,7 @@ nav{
 
 .about-vis{
   position:relative;height:440px;
-  background:rgba(7,7,18,0.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  background:rgba(15,15,30,0.68);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
   border:1px solid var(--border);overflow:hidden;
 }
 .about-vis::before,.about-vis::after{content:'';position:absolute;z-index:4;width:18px;height:18px}
@@ -319,7 +328,7 @@ nav{
   max-width:1400px;margin:0 auto;padding:0 48px;gap:24px;
 }
 .day-card{
-  background:rgba(7,7,18,0.78);
+  background:rgba(14,14,28,0.75);
   backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
   border:1px solid var(--border);
   border-left:3px solid var(--day-color,var(--blue));
@@ -370,8 +379,8 @@ nav{
   display:grid;grid-template-columns:repeat(3,1fr);
   gap:1px;background:var(--border);margin-top:60px;
 }
-.mcard{background:rgba(7,7,15,0.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:36px 28px;position:relative;overflow:hidden;transition:background .3s}
-.mcard:hover{background:rgba(13,13,28,0.85)}
+.mcard{background:rgba(14,14,26,0.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:36px 28px;position:relative;overflow:hidden;transition:background .3s}
+.mcard:hover{background:rgba(18,18,36,0.88)}
 .mcard:hover .mechanic-icon svg{filter:drop-shadow(0 0 6px var(--blue));color:var(--blue)}
 .mtag{
   position:absolute;top:16px;right:16px;
@@ -432,7 +441,7 @@ nav{
 .cd-grid{display:flex;align-items:center;justify-content:center;flex-wrap:wrap}
 .cd-block{
   padding:32px 52px;border:1px solid var(--border);margin:-1px;
-  min-width:152px;background:var(--card);position:relative;
+  min-width:152px;background:rgba(16,16,30,0.8);position:relative;
   overflow:hidden;transition:border-color .3s;
 }
 .cd-block:hover{border-color:rgba(0,71,255,0.3)}
@@ -460,7 +469,7 @@ nav{
 }
 .pg{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:60px}
 .pc{
-  background:rgba(7,7,18,0.75);
+  background:rgba(14,14,28,0.75);
   backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
   border:1px solid var(--border);
   padding:44px 28px;position:relative;overflow:hidden;
@@ -1718,6 +1727,17 @@ window.addEventListener('scroll', () => {
   build();
   window.addEventListener('resize', build);
   requestAnimationFrame(frame);
+})();
+
+/* ── NAV SCROLL ── */
+(function(){
+  const nav = document.querySelector('nav');
+  if (!nav) return;
+  function checkScroll(){
+    nav.classList.toggle('scrolled', window.scrollY > 8);
+  }
+  window.addEventListener('scroll', checkScroll, {passive:true});
+  checkScroll();
 })();
 
 /* ── FAQ ACCORDION ── */
