@@ -122,18 +122,12 @@ nav{
 
 /* Title block — two-column layout */
 .hero-layout{
-  display:flex;align-items:center;justify-content:space-between;
-  width:100%;gap:5%;
+  width:100%;
   position:relative;z-index:2;
   animation:fadeIn .1s ease 2.6s both;opacity:0;
 }
 .hero-layout.ready{animation:none;opacity:1}
-.hero-left{flex:0 0 52%;max-width:640px}
-.hero-right{
-  flex:1;position:relative;
-  display:flex;align-items:center;justify-content:center;
-  min-height:320px;
-}
+.hero-left{max-width:720px}
 
 .hero-overclock{
   font-family:'Rajdhani',sans-serif;
@@ -144,19 +138,13 @@ nav{
   position:relative;display:block;cursor:default;user-select:none;
 }
 
-/* SUMMIT com linhas laterais */
-.hero-summit-row{display:flex;align-items:center;gap:12px;margin:6px 0 22px}
-.summit-line{
-  flex:1;height:1px;max-width:60px;
-  background:linear-gradient(90deg,transparent,var(--blue));
-}
-.summit-line-r{background:linear-gradient(90deg,var(--blue),transparent)}
 .hero-summit{
   font-family:'Rajdhani',sans-serif;
   font-size:clamp(44px,8.2vw,128px);
-  font-weight:300;line-height:.88;letter-spacing:14px;
+  font-weight:300;line-height:.86;letter-spacing:7px;
   -webkit-text-stroke:1.5px var(--blue);color:transparent;
-  cursor:default;user-select:none;white-space:nowrap;
+  cursor:default;user-select:none;display:block;
+  margin:2px 0 26px;
 }
 
 /* Tagline */
@@ -191,38 +179,34 @@ nav{
 
 .hero-btns-inline{display:flex;gap:12px;align-items:center}
 
-/* Orb visual */
-.hero-orb{
-  width:clamp(220px,30vw,420px);aspect-ratio:1;border-radius:50%;
-  position:relative;overflow:hidden;
-  border:1px solid rgba(0,71,255,0.22);
-  box-shadow:0 0 60px rgba(0,71,255,0.14),0 0 130px rgba(0,71,255,0.07),inset 0 0 60px rgba(0,71,255,0.06);
-  animation:orbPulse 5s ease-in-out infinite;
-}
-@keyframes orbPulse{
-  0%,100%{box-shadow:0 0 60px rgba(0,71,255,0.14),0 0 130px rgba(0,71,255,0.07),inset 0 0 60px rgba(0,71,255,0.06)}
-  50%{box-shadow:0 0 85px rgba(0,71,255,0.24),0 0 170px rgba(0,71,255,0.11),inset 0 0 80px rgba(0,71,255,0.1)}
-}
-
-/* SYS STATUS panel */
-.hero-sys{
-  position:absolute;right:-8px;top:10%;
-  font-family:'JetBrains Mono',monospace;font-size:9px;
-  letter-spacing:2px;color:var(--muted);line-height:2.2;
-  text-align:right;display:flex;flex-direction:column;
-}
-.sys-lbl{color:var(--blue);text-transform:uppercase;margin-bottom:2px;font-size:8px;letter-spacing:3px}
-.sys-hi{color:#5580FF}
 .hbtn{
-  padding:12px 30px;
+  padding:13px 32px;
   font-family:'JetBrains Mono',monospace;font-size:11px;
   letter-spacing:2.5px;text-transform:uppercase;text-decoration:none;
-  transition:all .3s;cursor:pointer;
+  transition:all .3s;cursor:pointer;display:inline-block;
 }
-.hbtn-p{background:var(--blue);color:#fff;font-weight:700;box-shadow:0 0 18px rgba(0,71,255,0.38)}
-.hbtn-p:hover{box-shadow:0 0 36px rgba(0,71,255,0.72),0 0 60px rgba(0,71,255,0.2);transform:translateY(-2px)}
-.hbtn-s{background:transparent;color:var(--white);border:1px solid rgba(0,71,255,0.32)}
-.hbtn-s:hover{border-color:var(--blue);background:var(--blue-dim)}
+.hbtn-p{
+  background:linear-gradient(150deg,#5580ff 0%,#0040d8 35%,#0030b0 65%,#4070f0 100%);
+  color:#fff;font-weight:700;
+  border:1px solid rgba(100,150,255,0.35);
+  box-shadow:0 0 22px rgba(0,71,255,0.45),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -1px 0 rgba(0,0,0,0.3);
+}
+.hbtn-p:hover{
+  background:linear-gradient(150deg,#6690ff 0%,#1a50e8 35%,#1040c0 65%,#5080ff 100%);
+  box-shadow:0 0 40px rgba(0,71,255,0.75),0 0 80px rgba(0,71,255,0.2),inset 0 1px 0 rgba(255,255,255,0.25);
+  transform:translateY(-2px);
+}
+.hbtn-s{
+  background:linear-gradient(150deg,rgba(30,55,130,0.25) 0%,rgba(8,20,70,0.18) 100%);
+  color:var(--white);
+  border:1px solid rgba(59,111,255,0.4);
+  box-shadow:inset 0 1px 0 rgba(100,150,255,0.08);
+}
+.hbtn-s:hover{
+  border-color:rgba(80,140,255,0.65);
+  background:linear-gradient(150deg,rgba(40,70,160,0.35) 0%,rgba(15,35,100,0.28) 100%);
+  box-shadow:0 0 20px rgba(0,71,255,0.18),inset 0 1px 0 rgba(100,150,255,0.12);
+}
 
 .hero-scroll{
   position:absolute;bottom:36px;left:50%;transform:translateX(-50%);
@@ -231,8 +215,9 @@ nav{
   animation:fadeIn 1s ease 4s both;
 }
 .scroll-line{
-  width:1px;height:48px;
-  background:linear-gradient(to bottom,var(--blue),transparent);
+  width:2px;height:52px;
+  background:linear-gradient(to bottom,#6090ff,#0044e8 50%,transparent);
+  box-shadow:0 0 8px rgba(0,80,255,0.6);
   animation:pulseDown 2.2s ease infinite;
 }
 @keyframes pulseDown{0%,100%{opacity:.25;transform:scaleY(1)}50%{opacity:.9;transform:scaleY(.65)}}
@@ -544,18 +529,31 @@ nav{
 }
 .fbtns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
 .btn-p{
-  padding:16px 44px;background:var(--blue);color:#fff;
+  padding:16px 44px;color:#fff;
   font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:3px;text-transform:uppercase;
   text-decoration:none;font-weight:700;transition:all .3s;
-  box-shadow:0 0 22px rgba(0,71,255,0.42);
+  background:linear-gradient(150deg,#5580ff 0%,#0040d8 35%,#0030b0 65%,#4070f0 100%);
+  border:1px solid rgba(100,150,255,0.35);
+  box-shadow:0 0 22px rgba(0,71,255,0.45),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -1px 0 rgba(0,0,0,0.3);
 }
-.btn-p:hover{box-shadow:0 0 42px rgba(0,71,255,0.75),0 0 80px rgba(0,71,255,0.25);transform:translateY(-3px)}
+.btn-p:hover{
+  background:linear-gradient(150deg,#6690ff 0%,#1a50e8 35%,#1040c0 65%,#5080ff 100%);
+  box-shadow:0 0 44px rgba(0,71,255,0.78),0 0 90px rgba(0,71,255,0.22),inset 0 1px 0 rgba(255,255,255,0.25);
+  transform:translateY(-3px);
+}
 .btn-s{
-  padding:16px 44px;border:1px solid rgba(0,71,255,0.32);color:var(--white);
+  padding:16px 44px;color:var(--white);
   font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:3px;text-transform:uppercase;
   text-decoration:none;transition:all .3s;
+  background:linear-gradient(150deg,rgba(30,55,130,0.25) 0%,rgba(8,20,70,0.18) 100%);
+  border:1px solid rgba(59,111,255,0.38);
+  box-shadow:inset 0 1px 0 rgba(100,150,255,0.08);
 }
-.btn-s:hover{border-color:var(--blue);background:var(--blue-dim)}
+.btn-s:hover{
+  border-color:rgba(80,140,255,0.65);
+  background:linear-gradient(150deg,rgba(40,70,160,0.35) 0%,rgba(15,35,100,0.28) 100%);
+  box-shadow:0 0 22px rgba(0,71,255,0.2),inset 0 1px 0 rgba(100,150,255,0.12);
+}
 
 /* ── DATI ── */
 #dati{padding:100px 48px;max-width:1200px;margin:0 auto;position:relative;z-index:2}
@@ -608,13 +606,16 @@ svg{vertical-align:middle}
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{
-  background:rgba(0,71,255,0.45);
+  background:linear-gradient(180deg,#5a88ff 0%,#0044e8 40%,#0030c0 60%,#5a88ff 100%);
   border-radius:2px;
-  transition:background .2s;
+  box-shadow:0 0 6px rgba(0,71,255,0.6);
 }
-::-webkit-scrollbar-thumb:hover{background:rgba(59,111,255,0.75)}
+::-webkit-scrollbar-thumb:hover{
+  background:linear-gradient(180deg,#7aaaff 0%,#1a5af8 40%,#1040d8 60%,#7aaaff 100%);
+  box-shadow:0 0 10px rgba(0,100,255,0.8);
+}
 /* Firefox */
-html{scrollbar-width:thin;scrollbar-color:rgba(0,71,255,0.45) transparent}
+html{scrollbar-width:thin;scrollbar-color:#1a50e8 transparent}
 
 /* ── FEATURE STATEMENT ── */
 #feature-statement{
@@ -825,8 +826,6 @@ html{scrollbar-width:thin;scrollbar-color:rgba(0,71,255,0.45) transparent}
 }
 .fsocial a:hover{color:var(--blue);border-color:rgba(0,71,255,.4);box-shadow:0 0 12px rgba(0,71,255,.2)}
 
-/* ── GLOBE SVG ── */
-.globe-svg{width:100%;height:100%;position:relative;z-index:1;display:block}
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
@@ -855,14 +854,9 @@ html{scrollbar-width:thin;scrollbar-color:rgba(0,71,255,0.45) transparent}
   #hero{padding:80px 20px 60px}
   .hud-tr{display:none}
   .hud-tl{top:80px;left:20px}
-  .hero-layout{flex-direction:column;gap:36px}
-  .hero-left{flex:none;max-width:100%}
-  .hero-right{min-height:200px;width:100%}
-  .hero-orb{width:clamp(180px,55vw,260px)}
-  .hero-sys{display:none}
-  .hero-overclock{font-size:clamp(38px,11vw,68px)}
-  .hero-summit{font-size:clamp(28px,8.5vw,52px);letter-spacing:6px}
-  .summit-line{max-width:36px}
+  .hero-left{max-width:100%}
+  .hero-overclock{font-size:clamp(42px,11vw,72px);letter-spacing:2px}
+  .hero-summit{font-size:clamp(30px,8.5vw,54px);letter-spacing:4px;margin:2px 0 20px}
   .hero-stats{flex-wrap:wrap;gap:16px 0}
   .hstat{padding:0 16px}
   .hero-btns-inline{flex-wrap:wrap;justify-content:flex-start}
@@ -925,14 +919,9 @@ html{scrollbar-width:thin;scrollbar-color:rgba(0,71,255,0.45) transparent}
 
   <div class="hero-layout" id="hero-main">
 
-    <!-- Coluna esquerda -->
     <div class="hero-left">
       <h1 class="hero-overclock" id="hero-overclock">&nbsp;</h1>
-      <div class="hero-summit-row">
-        <span class="summit-line"></span>
-        <p class="hero-summit" id="hero-summit">&nbsp;</p>
-        <span class="summit-line summit-line-r"></span>
-      </div>
+      <p class="hero-summit" id="hero-summit">&nbsp;</p>
       <p class="hero-tagline">Performance. Tecnologia. Evolução.</p>
       <p class="hero-desc">3 dias de imersão em tecnologia, inovação e comunidade. Construído para o ecossistema tech gaúcho.</p>
       <div class="hero-stats">
@@ -954,55 +943,6 @@ html{scrollbar-width:thin;scrollbar-color:rgba(0,71,255,0.45) transparent}
       <div class="hero-btns-inline">
         <a href="#final-cta" class="hbtn hbtn-p">Quero Participar →</a>
         <a href="#about" class="hbtn hbtn-s">Saiba Mais ↓</a>
-      </div>
-    </div>
-
-    <!-- Coluna direita: visual tech -->
-    <div class="hero-right">
-      <div class="hero-orb">
-        <svg class="globe-svg" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <radialGradient id="gGrad" cx="36%" cy="30%" r="68%">
-              <stop offset="0%" stop-color="rgba(0,71,255,0.13)"/>
-              <stop offset="60%" stop-color="rgba(0,20,100,0.04)"/>
-              <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
-            </radialGradient>
-            <clipPath id="gClip"><circle cx="200" cy="200" r="195"/></clipPath>
-          </defs>
-          <!-- Atmosphere fill -->
-          <circle cx="200" cy="200" r="195" fill="url(#gGrad)"/>
-          <g clip-path="url(#gClip)" stroke="#0047FF" fill="none">
-            <!-- Latitude lines (horizontal ellipses) -->
-            <ellipse cx="200" cy="65"  rx="52"  ry="9"  stroke-width="0.7" opacity="0.18"/>
-            <ellipse cx="200" cy="108" rx="113" ry="18" stroke-width="0.7" opacity="0.22"/>
-            <ellipse cx="200" cy="155" rx="163" ry="27" stroke-width="0.7" opacity="0.28"/>
-            <ellipse cx="200" cy="205" rx="195" ry="32" stroke-width="0.8" opacity="0.38"/>
-            <ellipse cx="200" cy="255" rx="163" ry="27" stroke-width="0.7" opacity="0.28"/>
-            <ellipse cx="200" cy="300" rx="113" ry="18" stroke-width="0.7" opacity="0.22"/>
-            <ellipse cx="200" cy="343" rx="52"  ry="9"  stroke-width="0.7" opacity="0.18"/>
-            <!-- Longitude lines (vertical ellipses, varying width) -->
-            <ellipse cx="200" cy="200" rx="48"  ry="195" stroke-width="0.6" opacity="0.18"/>
-            <ellipse cx="200" cy="200" rx="110" ry="195" stroke-width="0.6" opacity="0.22"/>
-            <ellipse cx="200" cy="200" rx="162" ry="195" stroke-width="0.6" opacity="0.22"/>
-            <ellipse cx="200" cy="200" rx="195" ry="195" stroke-width="0.7" opacity="0.28"/>
-            <!-- Center crosshairs -->
-            <line x1="5"   y1="205" x2="395" y2="205" stroke-width="0.6" opacity="0.3"/>
-            <line x1="200" y1="5"   x2="200" y2="395" stroke-width="0.6" opacity="0.3"/>
-          </g>
-          <!-- Center target rings -->
-          <circle cx="200" cy="205" r="4"  fill="#0047FF" opacity="0.85"/>
-          <circle cx="200" cy="205" r="12" stroke="rgba(0,71,255,0.5)" stroke-width="1" opacity="0.7"/>
-          <circle cx="200" cy="205" r="24" stroke="rgba(0,71,255,0.25)" stroke-width="0.8" opacity="0.5"/>
-          <!-- Highlight glow (3D feel) -->
-          <ellipse cx="148" cy="135" rx="58" ry="42" fill="rgba(80,140,255,0.05)"/>
-        </svg>
-      </div>
-      <div class="hero-sys">
-        <span class="sys-lbl">SYS STATUS</span>
-        <span class="sys-hi">CPU &nbsp;100%</span>
-        <span class="sys-hi">GPU &nbsp;100%</span>
-        <span>RAM &nbsp;&nbsp;87%</span>
-        <span>TEMP &nbsp;36°C</span>
       </div>
     </div>
 
