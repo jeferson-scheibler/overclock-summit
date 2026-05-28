@@ -49,8 +49,8 @@ nav{
   border-bottom:1px solid var(--border);
 }
 .nav-logo{display:flex;align-items:center;text-decoration:none}
-.nav-logo img{height:34px;filter:drop-shadow(0 0 5px rgba(0,71,255,0.55));transition:filter .3s}
-.nav-logo:hover img{filter:drop-shadow(0 0 12px var(--blue)) drop-shadow(0 0 30px rgba(0,71,255,0.3))}
+.nav-logo img{height:34px;opacity:.9;transition:opacity .25s}
+.nav-logo:hover img{opacity:1}
 .nav-links{display:flex;gap:36px}
 .nav-links a{
   font-family:'JetBrains Mono',monospace;
@@ -103,29 +103,6 @@ nav{
   font-weight:900;line-height:.86;letter-spacing:1px;
   color:var(--white);
   position:relative;display:inline-block;cursor:default;user-select:none;
-}
-/* glitch layers */
-.hero-overclock::before,.hero-overclock::after{
-  content:attr(data-text);
-  position:absolute;top:0;left:0;
-  font-family:inherit;font-size:inherit;font-weight:inherit;letter-spacing:inherit;
-  pointer-events:none;opacity:0;
-}
-.hero-overclock::before{color:#1a5fff;text-shadow:3px 0 #1a5fff}
-.hero-overclock::after{color:#cc0033;text-shadow:-3px 0 #cc0033}
-.hero-overclock.glitching::before{opacity:.7;animation:gl-b .15s steps(3) forwards}
-.hero-overclock.glitching::after{opacity:.7;animation:gl-a .15s steps(3) forwards}
-@keyframes gl-b{
-  0%{clip-path:inset(0 0 90% 0);transform:translate(-4px,0)}
-  33%{clip-path:inset(38% 0 42% 0);transform:translate(4px,0)}
-  66%{clip-path:inset(68% 0 12% 0);transform:translate(-2px,0)}
-  100%{clip-path:inset(0 0 90% 0);opacity:0}
-}
-@keyframes gl-a{
-  0%{clip-path:inset(18% 0 68% 0);transform:translate(4px,0)}
-  33%{clip-path:inset(52% 0 30% 0);transform:translate(-4px,0)}
-  66%{clip-path:inset(80% 0 6% 0);transform:translate(2px,0)}
-  100%{clip-path:inset(18% 0 68% 0);opacity:0}
 }
 
 .hero-divider{
@@ -614,7 +591,7 @@ svg{vertical-align:middle}
   </div>
 
   <div class="hero-main" id="hero-main">
-    <h1 class="hero-overclock" id="hero-overclock" data-text="OVERCLOCK">&nbsp;</h1>
+    <h1 class="hero-overclock" id="hero-overclock">&nbsp;</h1>
     <div class="hero-divider"></div>
     <div class="hero-bottom-row">
       <p class="hero-summit" id="hero-summit">&nbsp;</p>
@@ -969,36 +946,58 @@ svg{vertical-align:middle}
   document.addEventListener('keydown', () => boot.remove(), { once: true });
 })();
 
-/* ── CANVAS — BINARY FIELD ── */
+/* ── CANVAS — DIGITAL RAIN ── */
 const canvas = document.getElementById('canvas-bg');
-const ctx = canvas.getContext('2d');
-let W, H, cells = [];
-const CELL = 38;
-const POOL = ['0','1','0','1','0','1','1','0','<','>','{','}','/','#'];
+const ctx    = canvas.getContext('2d');
+let W, H;
+const COL_W  = 20;
+const STEP   = 15;
+const POOL   = ['0','1','0','1','0','1','0','1','<','>','{','}','[',']','#','$','%','@','&','|','^','~','0','1'];
 
-function buildCells() {
-  cells = [];
-  const cols = Math.ceil(W / CELL) + 1;
-  const rows = Math.ceil(H / CELL) + 1;
-  for (let r = 0; r <= rows; r++) {
-    for (let c = 0; c <= cols; c++) {
-      cells.push({
-        x: c * CELL,
-        y: r * CELL,
-        ch: Math.random() < .7 ? (Math.random() < .5 ? '0' : '1') : POOL[Math.floor(Math.random()*POOL.length)],
-        op: 0,
-        target: Math.random() < .3 ? Math.random() * .13 + .03 : Math.random() * .04,
-        timer: Math.floor(Math.random() * 200),
-        interval: 90 + Math.floor(Math.random() * 340),
-      });
+class Stream {
+  constructor(col) {
+    this.x = col * COL_W + COL_W / 2;
+    this.reset(true);
+  }
+  reset(cold) {
+    this.speed    = 0.4 + Math.random() * 1.4;
+    this.len      = 6  + Math.floor(Math.random() * 22);
+    this.maxOp    = 0.05 + Math.random() * 0.1;
+    this.chars    = Array.from({length: this.len}, () => POOL[Math.floor(Math.random() * POOL.length)]);
+    this.mutEvery = 3  + Math.floor(Math.random() * 9);
+    this.mutTick  = 0;
+    this.y = cold ? Math.random() * H : -(this.len * STEP + Math.random() * H * 0.6);
+  }
+  update() {
+    this.y += this.speed;
+    if (++this.mutTick >= this.mutEvery) {
+      this.mutTick = 0;
+      this.chars[Math.floor(Math.random() * this.len)] = POOL[Math.floor(Math.random() * POOL.length)];
+    }
+    if (this.y - this.len * STEP > H) this.reset(false);
+  }
+  draw() {
+    for (let i = 0; i < this.len; i++) {
+      const cy = this.y - i * STEP;
+      if (cy < -STEP || cy > H + STEP) continue;
+      const t  = 1 - i / this.len;
+      const op = this.maxOp * t * (i < 2 ? 2.2 : 1);
+      if (op < 0.008) continue;
+      ctx.globalAlpha = Math.min(op, 0.95);
+      ctx.fillStyle   = i === 0 ? '#6699FF' : '#0047FF';
+      ctx.fillText(this.chars[i], this.x, cy);
     }
   }
 }
 
+let streams = [];
 function resize() {
-  W = canvas.width = window.innerWidth;
+  W = canvas.width  = window.innerWidth;
   H = canvas.height = window.innerHeight;
-  buildCells();
+  const n = Math.ceil(W / COL_W) + 1;
+  while (streams.length < n) streams.push(new Stream(streams.length));
+  streams.length = n;
+  streams.forEach((s, i) => { s.x = i * COL_W + COL_W / 2; });
 }
 resize();
 window.addEventListener('resize', resize);
@@ -1007,20 +1006,8 @@ window.addEventListener('resize', resize);
   ctx.clearRect(0, 0, W, H);
   ctx.font = '11px "JetBrains Mono", monospace';
   ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  cells.forEach(c => {
-    c.op += (c.target - c.op) * 0.022;
-    if (++c.timer >= c.interval) {
-      c.timer = 0;
-      c.interval = 90 + Math.floor(Math.random() * 380);
-      c.ch = Math.random() < .72 ? (Math.random() < .5 ? '0' : '1') : POOL[Math.floor(Math.random()*POOL.length)];
-      c.target = Math.random() < .28 ? Math.random() * .14 + .03 : Math.random() * .04;
-    }
-    if (c.op < 0.01) return;
-    ctx.globalAlpha = c.op;
-    ctx.fillStyle = '#0047FF';
-    ctx.fillText(c.ch, c.x, c.y);
-  });
+  ctx.textBaseline = 'top';
+  streams.forEach(s => { s.update(); s.draw(); });
   ctx.globalAlpha = 1;
   requestAnimationFrame(anim);
 })();
@@ -1037,38 +1024,52 @@ function tick() {
 }
 tick(); setInterval(tick, 1000);
 
-/* ── SCRAMBLE + GLITCH ── */
+/* ── SCRAMBLE ── */
 (function(){
-  const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789<>/{}[]#@$%';
-  function scramble(el, text, onDone){
-    const total = text.length * 7;
+  const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&<>[]{}|^~';
+  function scramble(el, text, speed, onDone){
     let frame = 0;
+    const hold  = speed || 6;
+    const total = text.length * hold;
     const id = setInterval(()=>{
-      el.textContent = text.split('').map((ch,i)=>{
-        if(i < Math.floor(frame/7)) return ch;
-        return CHARS[Math.floor(Math.random()*CHARS.length)];
+      el.textContent = text.split('').map((ch, i) => {
+        if (i < Math.floor(frame / hold)) return ch;
+        return CHARS[Math.floor(Math.random() * CHARS.length)];
       }).join('');
-      if(++frame > total){ clearInterval(id); el.textContent = text; if(onDone) onDone(); }
-    }, 22);
+      if (++frame > total) {
+        clearInterval(id);
+        el.textContent = text;
+        if (onDone) onDone();
+      }
+    }, 18);
+    return id;
   }
-  function glitchLoop(el){
-    const fire = ()=>{
-      el.classList.add('glitching');
-      setTimeout(()=>el.classList.remove('glitching'), 160);
-      setTimeout(fire, 3800 + Math.random()*4500);
-    };
-    setTimeout(fire, 5500);
-  }
-  setTimeout(()=>{
+
+  /* on boot finish: scramble OVERCLOCK → SUMMIT */
+  setTimeout(() => {
     const main = document.getElementById('hero-main');
     const oEl  = document.getElementById('hero-overclock');
     const sEl  = document.getElementById('hero-summit');
-    if(!oEl || !sEl) return;
-    if(main) main.style.opacity = '1';
-    scramble(oEl, 'OVERCLOCK', ()=>{
-      setTimeout(()=> scramble(sEl, 'SUMMIT', ()=> glitchLoop(oEl)), 180);
+    if (!oEl || !sEl) return;
+    if (main) main.style.opacity = '1';
+    scramble(oEl, 'OVERCLOCK', 6, () => {
+      setTimeout(() => scramble(sEl, 'SUMMIT', 7), 160);
     });
   }, 2650);
+
+  /* hover: re-scramble faster */
+  document.addEventListener('DOMContentLoaded', () => {
+    const oEl = document.getElementById('hero-overclock');
+    const sEl = document.getElementById('hero-summit');
+    let busy = false;
+    function hoverScramble(el, text) {
+      if (busy) return;
+      busy = true;
+      scramble(el, text, 3, () => { busy = false; });
+    }
+    if (oEl) oEl.addEventListener('mouseenter', () => hoverScramble(oEl, 'OVERCLOCK'));
+    if (sEl) sEl.addEventListener('mouseenter', () => hoverScramble(sEl, 'SUMMIT'));
+  });
 })();
 
 /* ── SCROLL REVEAL ── */
