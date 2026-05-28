@@ -632,6 +632,247 @@ svg{vertical-align:middle}
 /* Firefox */
 html{scrollbar-width:thin;scrollbar-color:rgba(0,71,255,0.45) transparent}
 
+/* ── FEATURE STATEMENT ── */
+#feature-statement{
+  padding:120px 0;background:var(--bg2);
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  overflow:hidden;position:relative;z-index:2;
+}
+.fs-inner{max-width:1440px;margin:0 auto;padding:0 64px}
+.fs-eyebrow{
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:5px;
+  text-transform:uppercase;color:var(--blue);margin-bottom:32px;display:flex;align-items:center;gap:12px;
+}
+.fs-eyebrow::before{content:'';width:32px;height:1px;background:var(--blue)}
+.fs-headline{margin-bottom:80px}
+.fs-line{
+  font-family:'Rajdhani',sans-serif;font-weight:700;
+  font-size:clamp(36px,5.5vw,80px);line-height:1.0;letter-spacing:2px;
+  color:var(--white);display:block;
+}
+.fs-line.fs-outline{
+  -webkit-text-stroke:1px var(--blue);color:transparent;
+}
+.fs-cols{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:var(--border);
+}
+.fs-col{
+  background:var(--bg2);padding:36px 28px;
+  transition:background .3s;position:relative;overflow:hidden;
+}
+.fs-col::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:var(--blue);opacity:0;transition:opacity .3s;
+}
+.fs-col:hover{background:rgba(13,13,28,.9)}
+.fs-col:hover::after{opacity:.6}
+.fs-col-num{
+  font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;
+  color:var(--blue);letter-spacing:3px;margin-bottom:20px;display:block;
+}
+.fs-col-icon{color:var(--blue);margin-bottom:14px;opacity:.75}
+.fs-col-title{
+  font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;
+  letter-spacing:2px;color:var(--white);margin-bottom:10px;
+}
+.fs-col-body{font-size:13px;line-height:1.85;color:var(--muted)}
+
+/* ── SPEAKERS ── */
+#speakers{
+  padding:140px 64px;position:relative;z-index:2;
+  background:var(--bg);
+}
+.speakers-inner{max-width:1200px;margin:0 auto}
+.speakers-hdr{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:52px;flex-wrap:wrap;gap:20px}
+.speakers-h{
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(28px,4vw,52px);font-weight:900;letter-spacing:3px;
+  color:var(--white);margin-top:16px;line-height:1.1;
+}
+.speakers-h .o{-webkit-text-stroke:1px var(--blue);color:transparent}
+.speakers-badge{
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;
+  text-transform:uppercase;color:var(--muted);border:1px solid var(--border);
+  padding:8px 18px;white-space:nowrap;
+}
+.speakers-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--border);
+}
+.speaker-card{
+  background:var(--card);padding:36px 28px;
+  position:relative;overflow:hidden;transition:background .3s;
+}
+.speaker-card:hover{background:rgba(13,13,28,.9)}
+.speaker-card:hover .speaker-avatar{border-color:rgba(0,71,255,.4);box-shadow:0 0 24px rgba(0,71,255,.15)}
+.speaker-avatar{
+  width:68px;height:68px;border-radius:50%;
+  border:1px solid var(--border);
+  background:radial-gradient(circle at 35% 35%,rgba(0,71,255,.12),rgba(0,71,255,.04));
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:18px;
+  font-family:'Orbitron',sans-serif;font-size:20px;font-weight:900;
+  color:rgba(0,71,255,.35);
+  transition:border-color .3s,box-shadow .3s;
+}
+.speaker-tba{
+  display:inline-block;padding:3px 10px;
+  border:1px solid rgba(0,71,255,.25);
+  font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;
+  color:var(--blue);text-transform:uppercase;margin-bottom:12px;
+}
+.speaker-name{
+  font-family:'Rajdhani',sans-serif;font-size:20px;font-weight:700;
+  letter-spacing:2px;color:var(--white);margin-bottom:4px;
+}
+.speaker-role{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:2px;color:var(--muted);text-transform:uppercase;
+}
+.speaker-company{
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  color:rgba(59,111,255,.8);margin-top:8px;letter-spacing:1px;
+}
+.speaker-corner{
+  position:absolute;bottom:16px;right:16px;
+  width:8px;height:8px;
+  border-bottom:1px solid var(--blue);border-right:1px solid var(--blue);
+  opacity:.4;
+}
+.speakers-more{
+  text-align:center;margin-top:36px;
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;
+  color:var(--muted);text-transform:uppercase;
+}
+.speakers-more::before{content:'// ';}
+
+/* ── SPONSORS ── */
+#sponsors{
+  padding:80px 64px;background:var(--bg2);
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  position:relative;z-index:2;
+}
+.sponsors-inner{max-width:1100px;margin:0 auto;text-align:center}
+.sponsors-label{
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:5px;
+  text-transform:uppercase;color:var(--muted);margin-bottom:48px;display:block;
+}
+.sponsors-tier{margin-bottom:40px}
+.sponsors-tier-lbl{
+  font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:4px;
+  color:var(--blue);text-transform:uppercase;margin-bottom:16px;display:block;
+}
+.sponsors-row{
+  display:flex;align-items:stretch;justify-content:center;
+  flex-wrap:wrap;gap:1px;background:var(--border);
+}
+.sponsor-item{
+  background:var(--bg2);padding:24px 40px;flex:1;min-width:130px;
+  font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;
+  letter-spacing:2px;color:var(--muted);
+  transition:color .3s,background .3s;
+  display:flex;align-items:center;justify-content:center;
+}
+.sponsor-item:hover{color:var(--white);background:rgba(13,13,28,.9)}
+.sponsor-item.gold{font-size:14px;padding:28px 52px;color:rgba(180,160,80,.7)}
+.sponsor-item.gold:hover{color:rgba(220,200,120,.9)}
+
+/* ── FAQ ── */
+#faq{
+  padding:120px 64px;max-width:900px;margin:0 auto;
+  position:relative;z-index:2;
+}
+.faq-list{margin-top:48px}
+.faq-item{
+  border-bottom:1px solid var(--border);overflow:hidden;
+}
+.faq-q{
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+  padding:22px 0;cursor:pointer;
+  font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:500;
+  color:var(--white);letter-spacing:.3px;
+  transition:color .2s;
+  list-style:none;
+}
+.faq-q:hover{color:var(--blue-hi)}
+.faq-q::marker{display:none}
+.faq-icon{
+  flex-shrink:0;width:20px;height:20px;
+  border:1px solid var(--border);display:flex;align-items:center;justify-content:center;
+  font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--blue);
+  transition:transform .3s,border-color .3s;line-height:1;
+}
+.faq-item.open .faq-icon{transform:rotate(45deg);border-color:rgba(0,71,255,.4)}
+.faq-a{
+  max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease;
+}
+.faq-item.open .faq-a{max-height:200px}
+.faq-a p{
+  font-size:14px;line-height:1.9;color:var(--muted);
+  padding:0 0 22px;
+}
+
+/* ── CTA BOX redesign ── */
+.cta-box{
+  max-width:760px;margin:0 auto;
+  border:1px solid rgba(0,71,255,.28);
+  padding:72px 64px;position:relative;
+  background:rgba(7,7,18,.5);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+}
+.cta-box::before,.cta-box::after{content:'';position:absolute;width:22px;height:22px}
+.cta-box::before{top:-1px;left:-1px;border-top:2px solid var(--blue);border-left:2px solid var(--blue);box-shadow:-2px -2px 10px rgba(0,71,255,.5)}
+.cta-box::after{bottom:-1px;right:-1px;border-bottom:2px solid var(--blue);border-right:2px solid var(--blue);box-shadow:2px 2px 10px rgba(0,71,255,.5)}
+.cta-box-tr{position:absolute;top:-1px;right:-1px;width:22px;height:22px;border-top:2px solid var(--blue);border-right:2px solid var(--blue);box-shadow:2px -2px 10px rgba(0,71,255,.5)}
+.cta-box-bl{position:absolute;bottom:-1px;left:-1px;width:22px;height:22px;border-bottom:2px solid var(--blue);border-left:2px solid var(--blue);box-shadow:-2px 2px 10px rgba(0,71,255,.5)}
+.cta-icon{color:var(--blue);margin-bottom:24px;opacity:.7}
+.cta-tag{
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:4px;
+  text-transform:uppercase;color:var(--blue);margin-bottom:20px;display:block;
+}
+
+/* ── FOOTER social ── */
+.fsocial{display:flex;gap:12px;align-items:center}
+.fsocial a{
+  width:34px;height:34px;border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--muted);transition:color .2s,border-color .2s,box-shadow .2s;
+}
+.fsocial a:hover{color:var(--blue);border-color:rgba(0,71,255,.4);box-shadow:0 0 12px rgba(0,71,255,.2)}
+
+/* ── ORB SCAN ── */
+.hero-orb-scan{
+  position:absolute;left:0;right:0;height:1px;top:20%;
+  background:linear-gradient(90deg,transparent 0%,rgba(0,71,255,.5) 40%,rgba(59,111,255,.8) 50%,rgba(0,71,255,.5) 60%,transparent 100%);
+  animation:orbScan 4s ease-in-out infinite;
+}
+.hero-orb-dot{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:6px;height:6px;border-radius:50%;
+  background:var(--blue);
+  box-shadow:0 0 14px rgba(0,71,255,.9),0 0 30px rgba(0,71,255,.4);
+  animation:orbDotPulse 2.5s ease-in-out infinite;
+}
+.hero-orb-ring{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:38%;height:38%;border-radius:50%;
+  border:1px dashed rgba(0,71,255,.2);
+  animation:orbRotate 20s linear infinite;
+}
+.hero-orb-ring2{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:65%;height:65%;border-radius:50%;
+  border:1px dashed rgba(0,71,255,.12);
+  animation:orbRotate 35s linear infinite reverse;
+}
+@keyframes orbScan{0%{top:10%;opacity:0}5%{opacity:1}95%{opacity:1}100%{top:90%;opacity:0}}
+@keyframes orbDotPulse{0%,100%{box-shadow:0 0 14px rgba(0,71,255,.9),0 0 30px rgba(0,71,255,.4)}50%{box-shadow:0 0 22px rgba(0,71,255,1),0 0 50px rgba(0,71,255,.6)}}
+@keyframes orbRotate{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+
 @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
@@ -654,7 +895,7 @@ html{scrollbar-width:thin;scrollbar-color:rgba(0,71,255,0.45) transparent}
   .cd-block{min-width:90px;padding:22px 20px}
   .cd-num{font-size:48px}
   .cd-sep{font-size:32px}
-  #final-cta{padding:100px 20px}
+  #final-cta{padding:80px 20px}
   footer{padding:28px 20px;flex-direction:column;text-align:center}
   #hero{padding:80px 20px 60px}
   .hud-tr{display:none}
@@ -669,12 +910,21 @@ html{scrollbar-width:thin;scrollbar-color:rgba(0,71,255,0.45) transparent}
   .summit-line{max-width:36px}
   .hero-stats{flex-wrap:wrap;gap:16px 0}
   .hstat{padding:0 16px}
-  .hero-btns-inline{flex-wrap:wrap}
-  .hero-btns-inline{justify-content:flex-start}
+  .hero-btns-inline{flex-wrap:wrap;justify-content:flex-start}
   .topics-grid{grid-template-columns:repeat(2,1fr)}
   .dati-inner{flex-direction:column;gap:32px;padding:32px 24px}
   #dati{padding:60px 24px}
-  .hero-sep{width:78%}
+  .fs-inner{padding:0 20px}
+  .fs-cols{grid-template-columns:repeat(2,1fr)}
+  #feature-statement{padding:80px 0}
+  .speakers-grid{grid-template-columns:1fr}
+  #speakers{padding:80px 20px}
+  .speakers-hdr{flex-direction:column;align-items:flex-start}
+  #sponsors{padding:60px 20px}
+  .sponsor-item{min-width:100px;padding:18px 20px;font-size:10px}
+  #faq{padding:80px 20px}
+  .cta-box{padding:48px 28px}
+  .fsocial{justify-content:center}
 }
 </style>
 </head>
@@ -691,11 +941,12 @@ html{scrollbar-width:thin;scrollbar-color:rgba(0,71,255,0.45) transparent}
   <a href="#hero" class="nav-logo"><img src="logo-os.svg" alt="Overclock Summit"></a>
   <div class="nav-links">
     <a href="#about">Sobre</a>
-    <a href="#days">Programação</a>
-    <a href="#partners">Parceiros</a>
-    <a href="#pricing">Cotas</a>
+    <a href="#speakers">Palestrantes</a>
+    <a href="#days">Agenda</a>
+    <a href="#pricing">Parceiros</a>
+    <a href="#faq">FAQ</a>
   </div>
-  <a href="#final-cta" class="nav-cta">Ser Parceiro</a>
+  <a href="#final-cta" class="nav-cta">Quero Participar</a>
 </nav>
 
 <!-- HERO -->
@@ -746,8 +997,8 @@ html{scrollbar-width:thin;scrollbar-color:rgba(0,71,255,0.45) transparent}
         </div>
       </div>
       <div class="hero-btns-inline">
-        <a href="#final-cta" class="hbtn hbtn-p">Seja Parceiro →</a>
-        <a href="#about" class="hbtn hbtn-s">Saiba mais ↓</a>
+        <a href="#final-cta" class="hbtn hbtn-p">Quero Participar →</a>
+        <a href="#about" class="hbtn hbtn-s">Saiba Mais ↓</a>
       </div>
     </div>
 
@@ -755,6 +1006,10 @@ html{scrollbar-width:thin;scrollbar-color:rgba(0,71,255,0.45) transparent}
     <div class="hero-right">
       <div class="hero-orb">
         <div class="hero-orb-grid"></div>
+        <div class="hero-orb-scan"></div>
+        <div class="hero-orb-ring"></div>
+        <div class="hero-orb-ring2"></div>
+        <div class="hero-orb-dot"></div>
       </div>
       <div class="hero-sys">
         <span class="sys-lbl">SYS STATUS</span>
@@ -796,11 +1051,56 @@ html{scrollbar-width:thin;scrollbar-color:rgba(0,71,255,0.45) transparent}
   </div>
 </div>
 
+<!-- FEATURE STATEMENT -->
+<section id="feature-statement">
+  <div class="fs-inner">
+    <p class="fs-eyebrow">O que esperar</p>
+    <div class="fs-headline reveal">
+      <span class="fs-line">DO HARDWARE AO SOFTWARE.</span>
+      <span class="fs-line fs-outline">DO OVERCLOCK AO NEXT LEVEL.</span>
+    </div>
+    <div class="fs-cols reveal reveal-delay-1">
+      <div class="fs-col">
+        <span class="fs-col-num">01</span>
+        <div class="fs-col-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        </div>
+        <h3 class="fs-col-title">PALESTRAS TÉCNICAS</h3>
+        <p class="fs-col-body">Keynotes e trilhas com profissionais de Oracle, Red Hat, Siemens e Dell. Conteúdo direto ao ponto, sem enrolação.</p>
+      </div>
+      <div class="fs-col">
+        <span class="fs-col-num">02</span>
+        <div class="fs-col-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3 class="fs-col-title">NETWORKING REAL</h3>
+        <p class="fs-col-body">3 dias para conectar estudantes, profissionais e empresas do ecossistema tech gaúcho num mesmo espaço.</p>
+      </div>
+      <div class="fs-col">
+        <span class="fs-col-num">03</span>
+        <div class="fs-col-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="10" y1="12" y2="12"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="15" x2="15.01" y1="13" y2="13"/><line x1="18" x2="18.01" y1="11" y2="11"/><rect width="20" height="12" x="2" y="6" rx="2"/></svg>
+        </div>
+        <h3 class="fs-col-title">COMPETIÇÕES & ARENA</h3>
+        <p class="fs-col-body">Hackathon, Fish Bowl, Tech Strike e Code-Codes. Placar ao vivo, prêmios e adrenalina do início ao fim.</p>
+      </div>
+      <div class="fs-col">
+        <span class="fs-col-num">04</span>
+        <div class="fs-col-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        </div>
+        <h3 class="fs-col-title">FEIRA DE CARREIRAS</h3>
+        <p class="fs-col-body">Retta, Interact, Clínica Experts e mais. Do GitHub para o contrato — a oportunidade mais honesta do RS.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ABOUT -->
 <section id="about">
   <div class="about-grid">
     <div>
-      <span class="stag reveal">SYS.01 — O QUE É</span>
+      <span class="stag reveal">SYS.01 — O EVENTO</span>
       <h2 class="about-h reveal reveal-delay-1">
         <span class="s">ACELERE</span><br>
         <span class="o">ALÉM DO</span><br>
@@ -826,10 +1126,75 @@ html{scrollbar-width:thin;scrollbar-color:rgba(0,71,255,0.45) transparent}
   </div>
 </section>
 
+<!-- SPEAKERS -->
+<section id="speakers">
+  <div class="speakers-inner">
+    <span class="stag reveal">SYS.02 — LINEUP</span>
+    <div class="speakers-hdr">
+      <h2 class="speakers-h reveal reveal-delay-1">
+        <span>PALESTRANTES</span><br>
+        <span class="o">CONFIRMADOS</span>
+      </h2>
+      <span class="speakers-badge reveal reveal-delay-2">Anúncios em breve · 2026</span>
+    </div>
+    <div class="speakers-grid reveal reveal-delay-1">
+      <div class="speaker-card">
+        <div class="speaker-avatar">?</div>
+        <span class="speaker-tba">A confirmar</span>
+        <p class="speaker-name">KEYNOTE SPEAKER</p>
+        <p class="speaker-role">Abertura Oficial · Dia 01</p>
+        <p class="speaker-company">Empresa Parceira</p>
+        <div class="speaker-corner"></div>
+      </div>
+      <div class="speaker-card">
+        <div class="speaker-avatar">?</div>
+        <span class="speaker-tba">A confirmar</span>
+        <p class="speaker-name">TRILHA BACKEND</p>
+        <p class="speaker-role">Arquitetura & Sistemas</p>
+        <p class="speaker-company">Senior Engineer</p>
+        <div class="speaker-corner"></div>
+      </div>
+      <div class="speaker-card">
+        <div class="speaker-avatar">?</div>
+        <span class="speaker-tba">A confirmar</span>
+        <p class="speaker-name">TRILHA IA & DADOS</p>
+        <p class="speaker-role">Machine Learning · LLMs</p>
+        <p class="speaker-company">Tech Lead</p>
+        <div class="speaker-corner"></div>
+      </div>
+      <div class="speaker-card">
+        <div class="speaker-avatar">?</div>
+        <span class="speaker-tba">A confirmar</span>
+        <p class="speaker-name">TRILHA FRONTEND</p>
+        <p class="speaker-role">Developer Experience</p>
+        <p class="speaker-company">Staff Engineer</p>
+        <div class="speaker-corner"></div>
+      </div>
+      <div class="speaker-card">
+        <div class="speaker-avatar">?</div>
+        <span class="speaker-tba">A confirmar</span>
+        <p class="speaker-name">SEGURANÇA OFENSIVA</p>
+        <p class="speaker-role">Pentest & Bug Bounty</p>
+        <p class="speaker-company">Security Researcher</p>
+        <div class="speaker-corner"></div>
+      </div>
+      <div class="speaker-card">
+        <div class="speaker-avatar">?</div>
+        <span class="speaker-tba">A confirmar</span>
+        <p class="speaker-name">TECH + NEGÓCIO</p>
+        <p class="speaker-role">Product & Engineering</p>
+        <p class="speaker-company">CTO / Founder</p>
+        <div class="speaker-corner"></div>
+      </div>
+    </div>
+    <p class="speakers-more reveal">Mais palestrantes serão anunciados nos próximos meses</p>
+  </div>
+</section>
+
 <!-- DAYS -->
 <section id="days">
   <div class="days-hdr">
-    <span class="stag reveal" style="justify-content:center">SYS.02 — OS TRÊS DIAS</span>
+    <span class="stag reveal" style="justify-content:center">SYS.03 — OS TRÊS DIAS</span>
     <h2 class="reveal reveal-delay-1">A JORNADA</h2>
   </div>
   <div class="days-grid">
@@ -883,7 +1248,7 @@ html{scrollbar-width:thin;scrollbar-color:rgba(0,71,255,0.45) transparent}
 
 <!-- MECHANICS -->
 <section id="mechanics">
-  <span class="stag reveal">SYS.03 — MECÂNICAS DE ENGAJAMENTO</span>
+  <span class="stag reveal">SYS.04 — MECÂNICAS DE ENGAJAMENTO</span>
   <h2 class="mech-h reveal reveal-delay-1"><span class="s">FORA DA</span><br><span class="o">CAIXA</span></h2>
   <div class="mech-grid">
     <div class="mcard reveal">
@@ -927,7 +1292,7 @@ html{scrollbar-width:thin;scrollbar-color:rgba(0,71,255,0.45) transparent}
 
 <!-- TOPICS -->
 <section id="partners">
-  <span class="stag reveal" style="justify-content:center">SYS.04 — TRILHAS</span>
+  <span class="stag reveal" style="justify-content:center">SYS.05 — TRILHAS</span>
   <h2 class="ptitle reveal reveal-delay-1">TEMAS QUE VÃO<br>SACUDIR O EVENTO</h2>
   <p class="psub reveal reveal-delay-2">Trilhas e debates que estamos construindo para 2026</p>
   <div class="topics-grid reveal">
@@ -966,6 +1331,39 @@ html{scrollbar-width:thin;scrollbar-color:rgba(0,71,255,0.45) transparent}
   </div>
 </section>
 
+<!-- SPONSORS -->
+<section id="sponsors">
+  <div class="sponsors-inner reveal">
+    <span class="sponsors-label">Marcas que impulsionam o Summit</span>
+    <div class="sponsors-tier">
+      <span class="sponsors-tier-lbl">// Apoio Institucional</span>
+      <div class="sponsors-row">
+        <div class="sponsor-item gold">UNIVATES</div>
+        <div class="sponsor-item gold">DATI</div>
+      </div>
+    </div>
+    <div class="sponsors-tier">
+      <span class="sponsors-tier-lbl">// Parceiros Confirmados</span>
+      <div class="sponsors-row">
+        <div class="sponsor-item">ORACLE</div>
+        <div class="sponsor-item">RED HAT</div>
+        <div class="sponsor-item">SIEMENS</div>
+        <div class="sponsor-item">DELL TECH</div>
+        <div class="sponsor-item">ALTUS</div>
+      </div>
+    </div>
+    <div class="sponsors-tier">
+      <span class="sponsors-tier-lbl">// Feira de Carreiras</span>
+      <div class="sponsors-row">
+        <div class="sponsor-item">RETTA</div>
+        <div class="sponsor-item">INTERACT</div>
+        <div class="sponsor-item">CLÍNICA EXPERTS</div>
+        <div class="sponsor-item">+ EM BREVE</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- COUNTDOWN -->
 <section id="countdown">
   <span class="cd-lbl">// CONTAGEM REGRESSIVA ATÉ O OVERCLOCK SUMMIT</span>
@@ -982,7 +1380,7 @@ html{scrollbar-width:thin;scrollbar-color:rgba(0,71,255,0.45) transparent}
 
 <!-- PRICING -->
 <section id="pricing">
-  <span class="stag reveal">SYS.05 — SEJA PARTE</span>
+  <span class="stag reveal">SYS.06 — SEJA PARTE</span>
   <h2 class="mech-h reveal reveal-delay-1"><span class="s">COTAS DE</span><br><span class="o">PARCERIA</span></h2>
   <p class="pricing-note reveal reveal-delay-2">Valores e benefícios personalizáveis · Negociação direta</p>
   <div class="pg">
@@ -1029,15 +1427,51 @@ html{scrollbar-width:thin;scrollbar-color:rgba(0,71,255,0.45) transparent}
 
 <!-- FINAL CTA -->
 <section id="final-cta">
-  <h2 class="ft">
-    <span class="n">VOCÊ</span><br>
-    <span class="s">ESTÁ</span><br>
-    <span class="n">DENTRO?</span>
-  </h2>
-  <p class="fsub">O Overclock Summit está construindo o maior evento de tecnologia do Rio Grande do Sul. Empresas, instituições e profissionais que queiram fazer parte desta história têm uma janela de oportunidade agora.</p>
-  <div class="fbtns">
-    <a href="mailto:da.ti@univates.br" class="btn-p">Quero ser parceiro</a>
-    <a href="#about" class="btn-s">Saber mais</a>
+  <div class="cta-box reveal">
+    <div class="cta-box-tr"></div>
+    <div class="cta-box-bl"></div>
+    <div class="cta-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/></svg>
+    </div>
+    <span class="cta-tag">Overclock Summit 2026 · Lajeado RS</span>
+    <h2 class="ft">
+      <span class="n">VOCÊ</span><br>
+      <span class="s">ESTÁ</span><br>
+      <span class="n">DENTRO?</span>
+    </h2>
+    <p class="fsub">O Overclock Summit está construindo o maior evento de tecnologia do Rio Grande do Sul. Empresas, instituições e profissionais que queiram fazer parte desta história têm uma janela de oportunidade agora.</p>
+    <div class="fbtns">
+      <a href="mailto:da.ti@univates.br" class="btn-p">Quero Participar →</a>
+      <a href="#about" class="btn-s">Saber Mais</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <span class="stag reveal">SYS.07 — DÚVIDAS</span>
+  <h2 class="mech-h reveal reveal-delay-1"><span class="s">PERGUNTAS</span><br><span class="o">FREQUENTES</span></h2>
+  <div class="faq-list reveal reveal-delay-2">
+    <div class="faq-item">
+      <summary class="faq-q">O evento é gratuito para estudantes?<span class="faq-icon">+</span></summary>
+      <div class="faq-a"><p>Sim. O Overclock Summit é voltado à comunidade tech gaúcha e terá acesso gratuito para estudantes da Univates e demais participantes. Detalhes de inscrição serão divulgados em breve.</p></div>
+    </div>
+    <div class="faq-item">
+      <summary class="faq-q">Preciso ser da Univates para participar?<span class="faq-icon">+</span></summary>
+      <div class="faq-a"><p>Não. O evento é aberto para toda a comunidade tech — estudantes, profissionais e entusiastas de tecnologia do Rio Grande do Sul e de qualquer lugar do Brasil.</p></div>
+    </div>
+    <div class="faq-item">
+      <summary class="faq-q">Como posso apresentar meu projeto?<span class="faq-icon">+</span></summary>
+      <div class="faq-a"><p>No Dia 3 teremos o GitHub Open Stage — uma sessão de Student Talks onde você apresenta projetos pessoais, TCC ou repositórios para uma banca de profissionais do mercado. As inscrições abrem junto com o evento.</p></div>
+    </div>
+    <div class="faq-item">
+      <summary class="faq-q">Como se tornar patrocinador ou parceiro?<span class="faq-icon">+</span></summary>
+      <div class="faq-a"><p>Entre em contato pelo e-mail da.ti@univates.br. Temos cotas personalizáveis (Dev, Pro e Master) com diferentes níveis de exposição, palestras, stands e acesso ao ecossistema de talentos do evento.</p></div>
+    </div>
+    <div class="faq-item">
+      <summary class="faq-q">O evento emite certificado de participação?<span class="faq-icon">+</span></summary>
+      <div class="faq-a"><p>Sim. Todos os participantes receberão certificado digital de participação. Palestrantes e finalistas de competições poderão ter reconhecimento adicional de horas complementares junto à Univates.</p></div>
+    </div>
   </div>
 </section>
 
@@ -1062,11 +1496,24 @@ html{scrollbar-width:thin;scrollbar-color:rgba(0,71,255,0.45) transparent}
   <div class="flogo">
     <img src="logo-os.svg" alt="Overclock Summit">
   </div>
-  <p class="fcopy">© 2026 Overclock Summit · Rio Grande do Sul · Brasil</p>
+  <p class="fcopy">© 2026 Overclock Summit · DATI × UNIVATES · Rio Grande do Sul</p>
   <div class="flinks">
     <a href="#about">Sobre</a>
-    <a href="#days">Programação</a>
+    <a href="#speakers">Palestrantes</a>
+    <a href="#days">Agenda</a>
     <a href="#pricing">Parceiros</a>
+    <a href="#faq">FAQ</a>
+  </div>
+  <div class="fsocial">
+    <a href="https://instagram.com/dati.univates" target="_blank" rel="noopener" title="Instagram">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+    </a>
+    <a href="https://linkedin.com/company/dati-univates" target="_blank" rel="noopener" title="LinkedIn">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+    </a>
+    <a href="mailto:da.ti@univates.br" title="Email">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+    </a>
   </div>
 </footer>
 
@@ -1346,6 +1793,16 @@ window.addEventListener('scroll', () => {
   window.addEventListener('resize', build);
   requestAnimationFrame(frame);
 })();
+
+/* ── FAQ ACCORDION ── */
+document.querySelectorAll('.faq-q').forEach(q => {
+  q.addEventListener('click', () => {
+    const item = q.closest('.faq-item');
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  });
+});
 
 /* ── EASTER EGG — digitar DATI ── */
 (function () {
