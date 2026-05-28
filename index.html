@@ -120,46 +120,115 @@ nav{
   mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.45) 30%,rgba(0,0,0,.22) 75%,transparent 100%);
 }
 
-/* Title block */
-.hero-main{position:relative;z-index:2;width:100%;animation:fadeIn .1s ease 2.6s both;opacity:0}
-.hero-main.ready{animation:none;opacity:1}
+/* Title block — two-column layout */
+.hero-layout{
+  display:flex;align-items:center;justify-content:space-between;
+  width:100%;gap:5%;
+  position:relative;z-index:2;
+  animation:fadeIn .1s ease 2.6s both;opacity:0;
+}
+.hero-layout.ready{animation:none;opacity:1}
+.hero-left{flex:0 0 52%;max-width:640px}
+.hero-right{
+  flex:1;position:relative;
+  display:flex;align-items:center;justify-content:center;
+  min-height:320px;
+}
 
 .hero-overclock{
   font-family:'Rajdhani',sans-serif;
   font-style:normal;
-  font-size:clamp(64px,12.5vw,182px);
-  font-weight:700;line-height:.88;letter-spacing:3px;
+  font-size:clamp(52px,9.5vw,148px);
+  font-weight:700;line-height:.88;letter-spacing:2px;
   color:var(--white);
-  position:relative;display:inline-block;cursor:default;user-select:none;
+  position:relative;display:block;cursor:default;user-select:none;
 }
 
-.hero-divider{
-  width:100%;height:1px;
-  background:linear-gradient(90deg,var(--blue) 60%,rgba(0,71,255,0.06));
-  margin:12px 0;
-  box-shadow:0 0 20px rgba(0,71,255,0.8),0 0 45px rgba(0,71,255,0.35),0 0 90px rgba(0,71,255,0.12);
+/* SUMMIT com linhas laterais */
+.hero-summit-row{display:flex;align-items:center;gap:10px;margin:8px 0 20px}
+.summit-line{
+  flex:1;height:1px;max-width:68px;
+  background:linear-gradient(90deg,transparent,var(--blue));
 }
-
-.hero-bottom-row{
-  display:flex;align-items:flex-end;justify-content:space-between;gap:32px;
-}
+.summit-line-r{background:linear-gradient(90deg,var(--blue),transparent)}
 .hero-summit{
   font-family:'Rajdhani',sans-serif;
-  font-size:clamp(54px,11vw,160px);
-  font-weight:300;line-height:.88;letter-spacing:8px;
+  font-size:clamp(38px,7vw,108px);
+  font-weight:300;line-height:.9;letter-spacing:10px;
   -webkit-text-stroke:1px var(--blue);color:transparent;
-  cursor:default;user-select:none;flex-shrink:0;
+  cursor:default;user-select:none;white-space:nowrap;
 }
-.hero-right-col{
-  display:flex;flex-direction:column;gap:20px;
-  text-align:right;max-width:300px;flex-shrink:0;
+
+/* Tagline */
+.hero-tagline{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;letter-spacing:4px;text-transform:uppercase;
+  color:var(--muted);margin-bottom:14px;
 }
+
+/* Descrição */
 .hero-desc{
   font-family:'Space Grotesk',sans-serif;
-  font-size:14px;line-height:1.7;color:rgba(160,160,200,0.8);
-  font-weight:400;letter-spacing:.1px;
+  font-size:15px;line-height:1.7;color:rgba(160,160,200,0.85);
+  font-weight:400;max-width:440px;
 }
-.hero-btns-inline{display:flex;flex-direction:column;gap:10px;align-items:flex-end}
+
+/* Stats */
+.hero-stats{
+  display:flex;align-items:center;margin:28px 0 32px;
+}
+.hstat{display:flex;flex-direction:column;gap:5px;padding:0 24px}
+.hstat:first-child{padding-left:0}
+.hstat-val{
+  font-family:'Orbitron',sans-serif;font-size:16px;font-weight:700;
+  color:var(--white);letter-spacing:1px;
+}
+.hstat-lbl{
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  letter-spacing:2px;text-transform:uppercase;color:var(--muted);
+}
+.hstat-sep{width:1px;height:30px;background:var(--border);flex-shrink:0}
+
+.hero-btns-inline{display:flex;gap:12px;align-items:center}
+
+/* Orb visual */
+.hero-orb{
+  width:clamp(220px,30vw,420px);aspect-ratio:1;border-radius:50%;
+  position:relative;overflow:hidden;
+  border:1px solid rgba(0,71,255,0.22);
+  box-shadow:0 0 60px rgba(0,71,255,0.14),0 0 130px rgba(0,71,255,0.07),inset 0 0 60px rgba(0,71,255,0.06);
+  animation:orbPulse 5s ease-in-out infinite;
+}
+.hero-orb-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(0,71,255,0.1) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,71,255,0.1) 1px,transparent 1px);
+  background-size:34px 34px;
+}
+.hero-orb::before{
+  content:'';position:absolute;inset:16%;border-radius:50%;
+  border:1px solid rgba(0,71,255,0.2);
+  box-shadow:0 0 28px rgba(0,71,255,0.12),inset 0 0 28px rgba(0,71,255,0.07);
+}
+.hero-orb::after{
+  content:'';position:absolute;inset:-10%;border-radius:50%;
+  border:1px solid rgba(0,71,255,0.08);
+}
+@keyframes orbPulse{
+  0%,100%{box-shadow:0 0 60px rgba(0,71,255,0.14),0 0 130px rgba(0,71,255,0.07),inset 0 0 60px rgba(0,71,255,0.06)}
+  50%{box-shadow:0 0 85px rgba(0,71,255,0.24),0 0 170px rgba(0,71,255,0.11),inset 0 0 80px rgba(0,71,255,0.1)}
+}
+
+/* SYS STATUS panel */
+.hero-sys{
+  position:absolute;right:-8px;top:10%;
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  letter-spacing:2px;color:var(--muted);line-height:2.2;
+  text-align:right;display:flex;flex-direction:column;
+}
+.sys-lbl{color:var(--blue);text-transform:uppercase;margin-bottom:2px;font-size:8px;letter-spacing:3px}
+.sys-hi{color:#5580FF}
 .hbtn{
   padding:12px 30px;
   font-family:'JetBrains Mono',monospace;font-size:11px;
@@ -590,12 +659,17 @@ html{scrollbar-width:thin;scrollbar-color:rgba(0,71,255,0.45) transparent}
   #hero{padding:80px 20px 60px}
   .hud-tr{display:none}
   .hud-tl{top:80px;left:20px}
-  .hud-bl{left:20px;bottom:36px}
-  .hero-overclock{font-size:clamp(38px,13vw,72px)}
-  .hero-summit{font-size:clamp(38px,13vw,72px)}
-  .hero-bottom-row{flex-direction:column;align-items:flex-start;gap:20px}
-  .hero-right-col{max-width:100%;text-align:left;gap:16px}
-  .hero-btns-inline{flex-direction:row;align-items:flex-start;flex-wrap:wrap}
+  .hero-layout{flex-direction:column;gap:36px}
+  .hero-left{flex:none;max-width:100%}
+  .hero-right{min-height:200px;width:100%}
+  .hero-orb{width:clamp(180px,55vw,260px)}
+  .hero-sys{display:none}
+  .hero-overclock{font-size:clamp(38px,11vw,68px)}
+  .hero-summit{font-size:clamp(28px,8.5vw,52px);letter-spacing:6px}
+  .summit-line{max-width:36px}
+  .hero-stats{flex-wrap:wrap;gap:16px 0}
+  .hstat{padding:0 16px}
+  .hero-btns-inline{flex-wrap:wrap}
   .hero-btns-inline{justify-content:flex-start}
   .topics-grid{grid-template-columns:repeat(2,1fr)}
   .dati-inner{flex-direction:column;gap:32px;padding:32px 24px}
@@ -643,19 +717,54 @@ html{scrollbar-width:thin;scrollbar-color:rgba(0,71,255,0.45) transparent}
     <span class="hud-val" style="color:var(--blue)">Em construção ▮</span>
   </div>
 
-  <div class="hero-main" id="hero-main">
-    <h1 class="hero-overclock" id="hero-overclock">&nbsp;</h1>
-    <div class="hero-divider"></div>
-    <div class="hero-bottom-row">
-      <p class="hero-summit" id="hero-summit">&nbsp;</p>
-      <div class="hero-right-col">
-        <p class="hero-desc">3 dias de imersão em tecnologia, inovação e comunidade. Construído para o ecossistema tech gaúcho.</p>
-        <div class="hero-btns-inline">
-          <a href="#final-cta" class="hbtn hbtn-p">Seja Parceiro</a>
-          <a href="#about" class="hbtn hbtn-s">Explorar</a>
+  <div class="hero-layout" id="hero-main">
+
+    <!-- Coluna esquerda -->
+    <div class="hero-left">
+      <h1 class="hero-overclock" id="hero-overclock">&nbsp;</h1>
+      <div class="hero-summit-row">
+        <span class="summit-line"></span>
+        <p class="hero-summit" id="hero-summit">&nbsp;</p>
+        <span class="summit-line summit-line-r"></span>
+      </div>
+      <p class="hero-tagline">Performance. Tecnologia. Evolução.</p>
+      <p class="hero-desc">3 dias de imersão em tecnologia, inovação e comunidade. Construído para o ecossistema tech gaúcho.</p>
+      <div class="hero-stats">
+        <div class="hstat">
+          <span class="hstat-val">OUT 2026</span>
+          <span class="hstat-lbl">Lajeado · RS</span>
+        </div>
+        <div class="hstat-sep"></div>
+        <div class="hstat">
+          <span class="hstat-val">3 DIAS</span>
+          <span class="hstat-lbl">de imersão</span>
+        </div>
+        <div class="hstat-sep"></div>
+        <div class="hstat">
+          <span class="hstat-val">+10</span>
+          <span class="hstat-lbl">palestrantes</span>
         </div>
       </div>
+      <div class="hero-btns-inline">
+        <a href="#final-cta" class="hbtn hbtn-p">Seja Parceiro →</a>
+        <a href="#about" class="hbtn hbtn-s">Saiba mais ↓</a>
+      </div>
     </div>
+
+    <!-- Coluna direita: visual tech -->
+    <div class="hero-right">
+      <div class="hero-orb">
+        <div class="hero-orb-grid"></div>
+      </div>
+      <div class="hero-sys">
+        <span class="sys-lbl">SYS STATUS</span>
+        <span class="sys-hi">CPU &nbsp;100%</span>
+        <span class="sys-hi">GPU &nbsp;100%</span>
+        <span>RAM &nbsp;&nbsp;87%</span>
+        <span>TEMP &nbsp;36°C</span>
+      </div>
+    </div>
+
   </div>
 
   <div class="hero-scroll"><div class="scroll-line"></div>scroll</div>
